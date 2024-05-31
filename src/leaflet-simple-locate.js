@@ -63,7 +63,7 @@
 </svg>`,
             iconGeolocation: L.divIcon({
                 html: `
-<svg width="26" height="26" viewBox="-13 -13 26 26" xmlns="http://www.w3.org/2000/svg">
+<svg class="leaflet-simple-locate-icon" width="26" height="26" viewBox="-13 -13 26 26" xmlns="http://www.w3.org/2000/svg">
 	<defs>
 		<filter id="gaussian">
 			<feGaussianBlur stdDeviation="0.5" />
@@ -71,7 +71,7 @@
 	</defs>
 	<circle fill="#000000" style="opacity:0.3;filter:url(#gaussian)" cx="1" cy="1" r="10" />
 	<circle fill="#ffffff" r="10" />
-	<circle class="leaflet-simple-locate icon" r="6">
+	<circle r="6">
 		<animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" />
 	</circle>
 </svg>`,
@@ -81,22 +81,22 @@
             }),
             iconOrientation: L.divIcon({
                 html: `
-<svg width="80" height="80" viewBox="-40 -40 80 80" xmlns="http://www.w3.org/2000/svg">
+<svg class="leaflet-simple-locate-icon" width="80" height="80" viewBox="-40 -40 80 80" xmlns="http://www.w3.org/2000/svg">
 	<defs>
 		<linearGradient id="gradient" x2="0" y2="-40" gradientUnits="userSpaceOnUse">
-			<stop class="leaflet-simple-locate icon" style="stop-opacity:1" offset="0" />
-			<stop class="leaflet-simple-locate icon" style="stop-opacity:0" offset="1" />
+			<stop style="stop-opacity:1" offset="0" />
+			<stop style="stop-opacity:0" offset="1" />
 		</linearGradient>
 		<filter id="gaussian">
 			<feGaussianBlur stdDeviation="0.5" />
 		</filter>
 	</defs>
-	<path class="leaflet-simple-locate icon orientation" opacity="1" style="fill:url(#gradient)" d="M -20,-40 H 20 L 10,0 h -20 z">
+	<path class="orientation" opacity="1" style="fill:url(#gradient)" d="M -20,-40 H 20 L 10,0 h -20 z">
 		<animate attributeName="opacity" values=".75;.3;.75" dur="2s" repeatCount="indefinite" />
 	</path>
 	<circle fill="#000000" style="opacity:0.3;filter:url(#gaussian)" cx="1" cy="1" r="10" />
 	<circle fill="#ffffff" r="10" />
-	<circle class="leaflet-simple-locate icon" r="6">
+	<circle r="6">
 		<animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" />
 	</circle>
 </svg>`,
@@ -319,7 +319,7 @@
             } else
                 this._circle = L.circle([this._latitude, this._longitude], {
                     radius: this._accuracy,
-                    className: "leaflet-simple-locate icon circle",
+                    className: "leaflet-simple-locate-circle",
                 }).addTo(this._map);
 
             let icon_name;
