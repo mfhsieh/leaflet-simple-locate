@@ -73,7 +73,7 @@
     position: absolute;
     margin: 0 !important;
     left: .5rem;
-    top: calc(var(--vh, 1vh) * 48);
+    top: calc(var(--vh, 1vh) * 50);
     transform: translateY(-50%);
 }
 
@@ -90,11 +90,11 @@
     transform: rotate(calc(-1 * var(--leaflet-simple-locate-orientation, 0deg)));
 }
 
-.leaflet-simple-locate-circle {
+/* .leaflet-simple-locate-circle {
     fill: rgba(var(--primary-rgb), 1);
     fill-opacity: .1;
     stroke: rgba(var(--primary-rgb), 1);
     stroke-width: 1;
     stroke-opacity: .5;
     cursor: grab;
-}
+} */
