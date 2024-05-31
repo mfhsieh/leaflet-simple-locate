@@ -73,7 +73,7 @@
     position: absolute;
     margin: 0 !important;
     left: .5rem;
-    top: calc(var(--pt-vh, 1vh) * 50);
+    top: calc(var(--pt-vh, 1vh) * 48);
     transform: translateY(-50%);
 }
 
