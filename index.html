@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Leaflet.Control.SimpleLocate - Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script src="https://kit.fontawesome.com/8132850410.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="examples/demo.css" />
+    <script src="src/leaflet-simple-locate.js"></script>
+
+    <style>
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            --primary-rgb: 25, 135, 84;
+        }
+
+        #map {
+            height: calc(var(--vh, 1vh) * 96);
+            width: 96vw;
+            margin: calc(var(--vh, 1vh) * 2) auto 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <script>
+        "use strict";
+
+        function set_viewport() {
+            document.documentElement.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
+        }
+
+        set_viewport();
+        window.addEventListener("resize", set_viewport);
+
+        let map = new L.Map("map", {
+            center: [25.048003, 121.517062],
+            zoom: 13,
+            zoomControl: false,
+        });
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            minZoom: 7,
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+        }).addTo(map);
+
+        new L.Control.SimpleLocate({
+            position: "topleft",
+            className: "button-locate",
+            initZoom: 17,
+            afterClick: (result) => {
+                if (!result.geolocation) console.log("Geolocation Error");
+                if (!result.orientation) console.log("Orientation Error");
+            },
+        }).addTo(map);
+
+    </script>
+</body>
+
+</html>

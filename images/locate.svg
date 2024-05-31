@@ -1,0 +1,12 @@
+<svg width="26" height="26" viewBox="-13 -13 26 26" xmlns="http://www.w3.org/2000/svg">
+	<defs>
+		<filter id="gaussian">
+			<feGaussianBlur stdDeviation="0.5" />
+		</filter>
+	</defs>
+	<circle fill="#000000" style="opacity:0.3;filter:url(#gaussian)" cx="1" cy="1" r="10" />
+	<circle fill="#ffffff" r="10" />
+	<circle class="leaflet-simple-locate icon" r="6">
+		<animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" />
+	</circle>
+</svg>

@@ -1,0 +1,94 @@
+/* 
+ * Leaflet Control SimpleLocate v0.1 - 2024-05-24 
+ * 
+ * Copyright 2024 mfhsieh
+ * mfhsieh@gmail.com 
+ * 
+ * Licensed under the MIT license. 
+ * 
+ * Demos: 
+ * https://mfhsieh.github.io/leaflet-simple-locate/
+ * 
+ * Source: 
+ * git@github.com:mfhsieh/leaflet-simple-locate.git 
+ * 
+ */
+.leaflet-simple-locate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* to make webkit and moz consistent */
+    box-sizing: border-box;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    margin: 0;
+    font-size: 1.375rem;
+    color: rgba(var(--primary-rgb), 1);
+    background-color: rgba(255, 255, 255, 1) !important;
+    border: .125rem solid rgba(var(--primary-rgb), 1) !important;
+    border-radius: 2.5rem;
+    box-shadow: rgba(0, 0, 0, .33) 0 .125rem .375rem;
+    /* opacity: .5;
+    transition: opacity .2s; */
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+}
+
+.leaflet-simple-locate svg {
+    fill: rgba(var(--primary-rgb), 1);
+    width: 1.375rem;
+    height: 1.375rem;
+    transform: rotate(var(--leaflet-simple-locate-orientation, 0deg));
+}
+
+/* .leaflet-simple-locate:hover,
+.leaflet-simple-locate:active {
+    opacity: 1;
+} */
+
+.leaflet-simple-locate:active {
+    color: white;
+    background-color: rgba(var(--primary-rgb), 1) !important;
+    border-color: white !important;
+}
+
+.leaflet-simple-locate:active svg {
+    fill: white;
+}
+
+.leaflet-simple-locate:focus {
+    box-shadow: 0 0 0 .25rem rgba(var(--primary-rgb), .25);
+}
+
+.leaflet-simple-locate:focus-visible {
+    border: .125rem solid rgba(0, 0, 0, 1);
+}
+
+.leaflet-simple-locate.button-locate {
+    position: absolute;
+    margin: 0 !important;
+    left: .5rem;
+    top: calc(var(--pt-vh, 1vh) * 50);
+    transform: translateY(-50%);
+}
+
+.leaflet-simple-locate.icon {
+    fill: rgba(var(--primary-rgb), 1);
+    stop-color: rgba(var(--primary-rgb), 1);
+}
+
+.leaflet-simple-locate.icon.orientation {
+    transform: rotate(calc(-1 * var(--leaflet-simple-locate-orientation, 0deg)));
+}
+
+.leaflet-simple-locate.icon.circle {
+    stroke: rgba(var(--primary-rgb), 1);
+    stroke-width: 1;
+    stroke-opacity: .5;
+    fill-opacity: .1;
+}
