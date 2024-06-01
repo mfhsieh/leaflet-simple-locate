@@ -242,6 +242,8 @@
             this._map.locate({ watch: true, enableHighAccuracy: true });
             this._map.on("locationfound", this._onLocationFound, this);
             this._map.on("locationerror", this._onLocationError, this);
+            this._map.on("zoomstart", this._onZoomStart, this);
+            this._map.on("zoomend", this._onZoomEnd, this);
         },
 
         _unwatchGeolocation: function () {
@@ -302,6 +304,14 @@
 
             document.documentElement.style.setProperty("--leaflet-simple-locate-orientation", -this._angle + "deg");
             this._updateMarker();
+        },
+
+        _onZoomStart: function () {
+            if (this._circle) this._map.removeLayer(this._circle);
+        },
+
+        _onZoomEnd: function () {
+            if (this._circle) this._map.addLayer(this._circle);
         },
 
         _updateButton: function () {
