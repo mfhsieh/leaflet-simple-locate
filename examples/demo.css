@@ -101,3 +101,7 @@
     stroke-opacity: .3;
     cursor: grab;
 }
+
+#leaflet-simple-locate-icon-spot {
+    cursor: pointer;
+}

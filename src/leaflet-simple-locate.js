@@ -82,11 +82,13 @@
 			<feGaussianBlur stdDeviation="0.5" />
 		</filter>
 	</defs>
-	<circle fill="#000000" style="opacity:0.3;filter:url(#gaussian)" cx="1" cy="1" r="10" />
-	<circle fill="#ffffff" r="10" />
-	<circle r="6">
-		<animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" />
-	</circle>
+	<g id="leaflet-simple-locate-icon-spot">
+		<circle fill="#000000" style="opacity:0.3;filter:url(#gaussian)" cx="1" cy="1" r="10" />
+		<circle fill="#ffffff" r="10" />
+		<circle r="6">
+			<animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" />
+		</circle>
+	</g>
 </svg>`,
                 className: "",
                 iconSize: [24, 24],
@@ -107,11 +109,13 @@
 	<path class="orientation" opacity="1" style="fill:url(#gradient)" d="M -24,-48 H 24 L 10,0 H -10 z">
 		<animate attributeName="opacity" values=".75;.33;.75" dur="2s" repeatCount="indefinite" />
 	</path>
-	<circle fill="#000000" style="opacity:0.3;filter:url(#gaussian)" cx="1" cy="1" r="10" />
-	<circle fill="#ffffff" r="10" />
-	<circle r="6">
-		<animate attributeName="r" values="6;9;6" dur="2s" repeatCount="indefinite" />
-	</circle>
+	<g id="leaflet-simple-locate-icon-spot">
+		<circle fill="#000000" style="opacity:0.3;filter:url(#gaussian)" cx="1" cy="1" r="10" />
+		<circle fill="#ffffff" r="10" />
+		<circle r="6">
+			<animate attributeName="r" values="6;9;6" dur="2s" repeatCount="indefinite" />
+		</circle>
+	</g>
 </svg>`,
                 className: "",
                 iconSize: [96, 96],

@@ -4,9 +4,11 @@
 			<feGaussianBlur stdDeviation="0.5" />
 		</filter>
 	</defs>
-	<circle fill="#000000" style="opacity:0.3;filter:url(#gaussian)" cx="1" cy="1" r="10" />
-	<circle fill="#ffffff" r="10" />
-	<circle r="6">
-		<animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" />
-	</circle>
+	<g id="leaflet-simple-locate-icon-spot">
+		<circle fill="#000000" style="opacity:0.3;filter:url(#gaussian)" cx="1" cy="1" r="10" />
+		<circle fill="#ffffff" r="10" />
+		<circle r="6">
+			<animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" />
+		</circle>
+	</g>
 </svg>

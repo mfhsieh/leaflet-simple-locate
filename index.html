@@ -57,16 +57,24 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
         }).addTo(map);
 
-        new L.Control.SimpleLocate({
+        let marker = new L.Control.SimpleLocate({
             position: "topleft",
             className: "button-locate",
             defaultZoomLevel: 17,
             afterClick: (result) => {
                 if (!result.geolocation) console.log("Geolocation Error");
                 if (!result.orientation) console.log("Orientation Error");
+                document.getElementById("leaflet-simple-locate-icon-spot").addEventListener("click", () => {
+                    let latlng = marker.getLatLng();
+                    console.log(`(lat: ${latlng.lat}, lng: ${latlng.lng})`);
+
+                    L.popup()
+                        .setLatLng([latlng.lat, latlng.lng])
+                        .setContent(`(lat: ${latlng.lat}, lng: ${latlng.lng})`)
+                        .openOn(map);
+                });
             },
         }).addTo(map);
-
     </script>
 </body>
 
