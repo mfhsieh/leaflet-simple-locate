@@ -38,11 +38,11 @@
             ariaLabel: "",  // aria-label for button
             afterClick: null,  // callback after button clicked
 
-            initSetView: true,  // set the map view after button clicked. true or false.
+            setViewAfterClick: true,  // set the map view after button clicked. true or false.
             defaultZoomLevel: undefined,  // map zoom level after button clicked. undefined or number
             drawCircle: true,  // draw a circle indicating the location accuracy. true or false
 
-            _clickTimeoutDelay: 400,  // maximum interval(millisecond) for double click
+            _clickTimeoutDelay: 500,  // maximum interval(millisecond) for double click
             _minAngleChange: 3,  // minimum angle change to trigger an update
 
             htmlInit: `
@@ -57,18 +57,18 @@
             htmlSpinner: `
 <svg width="16" height="16" viewBox="-8 -8 16 16" xmlns="http://www.w3.org/2000/svg">
 	<g>
-		<circle opacity="1" cx="0" cy="-6" r="1.5" />
-		<circle opacity=".917" cx="0" cy="-6" r="1.5" transform="rotate(30)" />
-		<circle opacity=".833" cx="0" cy="-6" r="1.5" transform="rotate(60)" />
-		<circle opacity=".750" cx="0" cy="-6" r="1.5" transform="rotate(90)" />
-		<circle opacity=".667" cx="0" cy="-6" r="1.5" transform="rotate(120)" />
-		<circle opacity=".583" cx="0" cy="-6" r="1.5" transform="rotate(150)" />
-		<circle opacity=".500" cx="0" cy="-6" r="1.5" transform="rotate(180)" />
-		<circle opacity=".417" cx="0" cy="-6" r="1.5" transform="rotate(210)" />
-		<circle opacity=".333" cx="0" cy="-6" r="1.5" transform="rotate(240)" />
-		<circle opacity=".250" cx="0" cy="-6" r="1.5" transform="rotate(270)" />
-		<circle opacity=".167" cx="0" cy="-6" r="1.5" transform="rotate(300)" />
-		<circle opacity=".083" cx="0" cy="-6" r="1.5" transform="rotate(330)" />
+		<circle opacity="1" cx="0" cy="6" r="1.5" />
+		<circle opacity=".917" cx="0" cy="6" r="1.5" transform="rotate(30)" />
+		<circle opacity=".833" cx="0" cy="6" r="1.5" transform="rotate(60)" />
+		<circle opacity=".750" cx="0" cy="6" r="1.5" transform="rotate(90)" />
+		<circle opacity=".667" cx="0" cy="6" r="1.5" transform="rotate(120)" />
+		<circle opacity=".583" cx="0" cy="6" r="1.5" transform="rotate(150)" />
+		<circle opacity=".500" cx="0" cy="6" r="1.5" transform="rotate(180)" />
+		<circle opacity=".417" cx="0" cy="6" r="1.5" transform="rotate(210)" />
+		<circle opacity=".333" cx="0" cy="6" r="1.5" transform="rotate(240)" />
+		<circle opacity=".250" cx="0" cy="6" r="1.5" transform="rotate(270)" />
+		<circle opacity=".167" cx="0" cy="6" r="1.5" transform="rotate(300)" />
+		<circle opacity=".083" cx="0" cy="6" r="1.5" transform="rotate(330)" />
 		<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2s" repeatCount="indefinite" />
 	</g>
 </svg>`,
@@ -181,11 +181,14 @@
 
         _onClick: async function () {
             function checkResult() {
+                this._updateButton();
+
                 if (this._geolocation === false && this._orientation === false) {
                     this._clicked = undefined;
                     this._geolocation = undefined;
                     this._orientation = undefined;
                 }
+
                 if (this.options.afterClick && typeof this._geolocation !== "undefined" && typeof this._orientation !== "undefined")
                     this.options.afterClick({
                         geolocation: this._geolocation,
@@ -212,7 +215,9 @@
                     clearTimeout(this._clickTimeout);
                     this._clickTimeout = undefined;
 
-                    if (!this._map || this._clicked) {
+                    if (!this._map) return;
+
+                    if (this._clicked && this.options.setViewAfterClick) {
                         this._setView();
                         return;
                     }
@@ -225,8 +230,7 @@
                         this._geolocation = true;
                         this._onLocationFound(event.coords);
                         this._watchGeolocation();
-                        this._updateButton();
-                        if (this.options.initSetView) this._setView();
+                        if (this.options.setViewAfterClick) this._setView();
                         checkResult.bind(this)();
                     }).catch(() => {
                         // console.log("_checkGeolocation", new Date().toISOString(), "failed!");
@@ -238,7 +242,6 @@
                         // console.log("_checkOrientation", new Date().toISOString(), "success!");
                         this._orientation = true;
                         this._watchOrientation();
-                        this._updateButton();
                         checkResult.bind(this)();
                     }).catch(() => {
                         // console.log("_checkOrientation", new Date().toISOString(), "failed!");
@@ -352,6 +355,11 @@
         },
 
         _updateButton: function () {
+            if (!this._clicked) {
+                this._button.innerHTML = this.options.htmlInit;
+                return;
+            }
+
             if (typeof this._geolocation === "undefined" || typeof this._orientation === "undefined") {
                 this._button.innerHTML = this.options.htmlSpinner;
                 return;
@@ -359,7 +367,6 @@
 
             if (this._orientation) this._button.innerHTML = this.options.htmlOrientation;
             else if (this._geolocation) this._button.innerHTML = this.options.htmlGeolocation;
-            else this._button.innerHTML = this.options.htmlInit;
         },
 
         _updateMarker: function () {
