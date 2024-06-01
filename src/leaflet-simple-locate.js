@@ -149,6 +149,18 @@
             return this._button;
         },
 
+        getLatLng: function () {
+            if (!this._latitude || !this._longitude) return null;
+            return {
+                lat: this._latitude,
+                lng: this._longitude,
+            };
+        },
+
+        setZoomLevel: function (level) {
+            this.options.defaultZoomLevel = level;
+        },
+
         _onClick: async function () {
             function checkResult() {
                 if (this._geolocation === false && this._orientation === false) {
