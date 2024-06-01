@@ -57,47 +57,31 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
         }).addTo(map);
 
-        let marker = new L.Control.SimpleLocate({
+        let control = new L.Control.SimpleLocate({
             position: "topleft",
             className: "button-locate",
             defaultZoomLevel: 17,
             afterClick: (result) => {
+                console.log("afterClick");
                 if (!result.geolocation) console.log("Geolocation Error");
                 if (!result.orientation) console.log("Orientation Error");
             },
             afterMarkerAdded: () => {
                 console.log("afterMarkerAdded");
-                document.getElementById("leaflet-simple-locate-icon-spot").addEventListener("click", (event) => {
-                    let latlng = marker.getLatLng();
-                    console.log("leaflet-simple-locate-icon-spot", latlng);
+                const elem = document.getElementById("leaflet-simple-locate-icon-spot");
+                if (elem)
+                    elem.addEventListener("click", (event) => {
+                        let latlng = control.getLatLng();
+                        console.log("leaflet-simple-locate-icon-spot", latlng);
 
-                    L.popup()
-                        .setLatLng(latlng)
-                        .setContent(`(lat: ${latlng.lat}, lng: ${latlng.lng})`)
-                        .openOn(map);
+                        L.popup()
+                            .setLatLng(latlng)
+                            .setContent(`(lat: ${latlng.lat}, lng: ${latlng.lng})`)
+                            .openOn(map);
 
-                    event.stopPropagation();
-                    event.preventDefault();
-                });
-
-                // const intervalID = setInterval(() => {
-                //     const elem = document.getElementById("leaflet-simple-locate-icon-spot");
-                //     if (elem) {
-                //         clearInterval(intervalID);
-                //         elem.addEventListener("click", (event) => {
-                //             let latlng = marker.getLatLng();
-                //             console.log(latlng);
-
-                //             L.popup()
-                //                 .setLatLng(latlng)
-                //                 .setContent(`(lat: ${latlng.lat}, lng: ${latlng.lng})`)
-                //                 .openOn(map);
-
-                //             event.stopPropagation();
-                //             event.preventDefault();
-                //         });
-                //     };
-                // }, 200);
+                        event.stopPropagation();
+                        event.preventDefault();
+                    });
             },
         }).addTo(map);
     </script>

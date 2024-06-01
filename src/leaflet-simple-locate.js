@@ -409,7 +409,10 @@
 
                 if (this.options.afterMarkerAdded)
                     this._map.on("layeradd", (event) => {
-                        if (event.layer === this._marker) this.options.afterMarkerAdded();
+                        if (event.layer === this._marker) {
+                            // console.log("_updateMarker", new Date().toISOString(), this._marker.icon_name);
+                            this.options.afterMarkerAdded();
+                        }
                     });
 
                 this._marker.addTo(this._map);
