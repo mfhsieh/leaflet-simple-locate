@@ -73,6 +73,7 @@
                         .setContent(`(lat: ${latlng.lat}, lng: ${latlng.lng})`)
                         .openOn(map);
                     event.stopPropagation();
+                    event.preventDefault();
                 });
             },
         }).addTo(map);
