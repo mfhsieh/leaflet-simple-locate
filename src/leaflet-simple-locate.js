@@ -34,8 +34,8 @@
     const control = L.Control.extend({
         options: {
             className: "",
-            initPan: true,
-            initZoom: undefined,
+            initSetView: true,
+            defaultZoomLevel: undefined,
             title: "Locate Geolocation and Orientation",
             ariaLabel: "",
             afterClick: null,  // callback for button clicked
@@ -190,9 +190,9 @@
                         // console.log("_checkGeolocation", new Date().toISOString(), "success!");
                         this._geolocation = true;
                         this._onLocationFound(event.coords);
-                        this._setView();
                         this._watchGeolocation();
                         this._updateButton();
+                        if (this.options.initSetView) this._setView();
                         checkResult.bind(this)();
                     }).catch(() => {
                         // console.log("_checkGeolocation", new Date().toISOString(), "failed!");
@@ -313,6 +313,11 @@
         _updateMarker: function () {
             if (!this._latitude || !this._longitude || !this._accuracy) return;
 
+            let icon_name;
+            if (this._geolocation && this._orientation && this._angle) icon_name = "iconOrientation";
+            else if (this._geolocation) icon_name = "iconGeolocation";
+            else return;
+
             if (this._circle) {
                 this._circle.setLatLng([this._latitude, this._longitude]);
                 this._circle.setRadius(this._accuracy);
@@ -322,28 +327,24 @@
                     className: "leaflet-simple-locate-circle",
                 }).addTo(this._map);
 
-            let icon_name;
-            if (this._geolocation && this._orientation && this._angle) icon_name = "iconOrientation";
-            else if (this._geolocation) icon_name = "iconGeolocation";
-            else return;
-
-            if (this._marker && this._marker.icon_name === icon_name) {
+            if (this._marker && this._marker.icon_name === icon_name)
                 this._marker.setLatLng([this._latitude, this._longitude]);
-                return;
+            else {
+                if (this._marker) this._map.removeLayer(this._marker);
+                this._marker = L.marker([this._latitude, this._longitude], {
+                    icon: this.options[icon_name],
+                }).addTo(this._map);
+                this._marker.icon_name = icon_name;
             }
-
-            if (this._marker) this._map.removeLayer(this._marker);
-            this._marker = L.marker([this._latitude, this._longitude], {
-                icon: this.options[icon_name],
-            }).addTo(this._map);
-            this._marker.icon_name = icon_name;
         },
 
         _setView: function () {
-            if (!this._map || !this._latitude || !this._longitude || !this._accuracy) return;
+            if (!this._map || !this._latitude || !this._longitude) return;
 
-            if (this.options.initPan && this.options.initZoom) this._map.setView([this._latitude, this._longitude], this.options.initZoom);
-            else if (this.options.initPan) this._map.setView([this._latitude, this._longitude]);
+            if (this.options.defaultZoomLevel)
+                this._map.setView([this._latitude, this._longitude], this.options.defaultZoomLevel);
+            else
+                this._map.setView([this._latitude, this._longitude]);
         },
     });
 

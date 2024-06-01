@@ -95,6 +95,6 @@
     fill-opacity: .1;
     stroke: rgba(var(--primary-rgb), 1);
     stroke-width: 1;
-    stroke-opacity: .5;
+    stroke-opacity: .3;
     cursor: grab;
 }

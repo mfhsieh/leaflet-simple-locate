@@ -60,7 +60,7 @@
         new L.Control.SimpleLocate({
             position: "topleft",
             className: "button-locate",
-            initZoom: 17,
+            defaultZoomLevel: 17,
             afterClick: (result) => {
                 if (!result.geolocation) console.log("Geolocation Error");
                 if (!result.orientation) console.log("Orientation Error");
