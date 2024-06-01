@@ -57,11 +57,11 @@
             htmlSpinner: `
 <svg width="16" height="16" viewBox="-8 -8 16 16" xmlns="http://www.w3.org/2000/svg">
 	<g>
-		<circle opacity="1" cx="0" cy="-6.25" r="1.25" />
-		<circle opacity=".8" cx="0" cy="-6.25" r="1.25" transform="rotate(-20)" />
-		<circle opacity=".6" cx="0" cy="-6.25" r="1.25" transform="rotate(-40)" />
-		<circle opacity=".4" cx="0" cy="-6.25" r="1.25" transform="rotate(-60)" />
-		<circle opacity=".2" cx="0" cy="-6.25" r="1.25" transform="rotate(-80)" />
+		<circle opacity="1" cx="0" cy="-6" r="1.5" />
+		<circle opacity=".92" cx="0" cy="-6" r="1.5" transform="rotate(-30)" />
+		<circle opacity=".76" cx="0" cy="-6" r="1.5" transform="rotate(-60)" />
+		<circle opacity=".52" cx="0" cy="-6" r="1.5" transform="rotate(-90)" />
+		<circle opacity=".20" cx="0" cy="-6" r="1.5" transform="rotate(-120)" />
 		<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2s" repeatCount="indefinite" />
 	</g>
 </svg>`,
@@ -349,17 +349,17 @@
 
         _updateButton: function () {
             if (!this._clicked) {
-                this._button.innerHTML = this.options.htmlInit;
+                if (this._button.innerHTML != this.options.htmlInit) this._button.innerHTML = this.options.htmlInit;
                 return;
             }
 
             if (typeof this._geolocation === "undefined" || typeof this._orientation === "undefined") {
-                this._button.innerHTML = this.options.htmlSpinner;
+                if (this._button.innerHTML != this.options.htmlSpinner) this._button.innerHTML = this.options.htmlSpinner;
                 return;
             }
 
-            if (this._orientation) this._button.innerHTML = this.options.htmlOrientation;
-            else if (this._geolocation) this._button.innerHTML = this.options.htmlGeolocation;
+            if (this._orientation && this._button.innerHTML != this.options.htmlOrientation) this._button.innerHTML = this.options.htmlOrientation;
+            else if (this._geolocation && this._button.innerHTML != this.options.htmlGeolocation) this._button.innerHTML = this.options.htmlGeolocation;
         },
 
         _updateMarker: function () {
