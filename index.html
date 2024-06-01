@@ -42,6 +42,19 @@
             document.documentElement.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
         }
 
+        function handleSpotClick(event) {
+            let latlng = control.getLatLng();
+            console.log("leaflet-simple-locate-icon-spot", latlng);
+
+            L.popup()
+                .setLatLng(latlng)
+                .setContent(`(lat: ${latlng.lat}, lng: ${latlng.lng})`)
+                .openOn(map);
+
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
         set_viewport();
         window.addEventListener("resize", set_viewport);
 
@@ -71,21 +84,9 @@
                 console.log("afterMarkerAdded");
                 const elem = document.getElementById("leaflet-simple-locate-icon-spot");
                 if (elem) {
-                    if (elem_old) elem_old.removeEventListener("click");
-
+                    if (elem_old) elem_old.removeEventListener("click", handleSpotClick);
+                    elem.addEventListener("click", handleSpotClick);
                     elem_old = elem;
-                    elem.addEventListener("click", (event) => {
-                        let latlng = control.getLatLng();
-                        console.log("leaflet-simple-locate-icon-spot", latlng);
-
-                        L.popup()
-                            .setLatLng(latlng)
-                            .setContent(`(lat: ${latlng.lat}, lng: ${latlng.lng})`)
-                            .openOn(map);
-
-                        event.stopPropagation();
-                        event.preventDefault();
-                    });
                 }
             },
         }).addTo(map);
