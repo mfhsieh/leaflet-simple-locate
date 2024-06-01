@@ -57,18 +57,11 @@
             htmlSpinner: `
 <svg width="16" height="16" viewBox="-8 -8 16 16" xmlns="http://www.w3.org/2000/svg">
 	<g>
-		<circle opacity="1" cx="0" cy="6" r="1.5" />
-		<circle opacity=".917" cx="0" cy="6" r="1.5" transform="rotate(30)" />
-		<circle opacity=".833" cx="0" cy="6" r="1.5" transform="rotate(60)" />
-		<circle opacity=".750" cx="0" cy="6" r="1.5" transform="rotate(90)" />
-		<circle opacity=".667" cx="0" cy="6" r="1.5" transform="rotate(120)" />
-		<circle opacity=".583" cx="0" cy="6" r="1.5" transform="rotate(150)" />
-		<circle opacity=".500" cx="0" cy="6" r="1.5" transform="rotate(180)" />
-		<circle opacity=".417" cx="0" cy="6" r="1.5" transform="rotate(210)" />
-		<circle opacity=".333" cx="0" cy="6" r="1.5" transform="rotate(240)" />
-		<circle opacity=".250" cx="0" cy="6" r="1.5" transform="rotate(270)" />
-		<circle opacity=".167" cx="0" cy="6" r="1.5" transform="rotate(300)" />
-		<circle opacity=".083" cx="0" cy="6" r="1.5" transform="rotate(330)" />
+		<circle opacity="1" cx="0" cy="-6.25" r="1.25" />
+		<circle opacity=".8" cx="0" cy="-6.25" r="1.25" transform="rotate(-20)" />
+		<circle opacity=".6" cx="0" cy="-6.25" r="1.25" transform="rotate(-40)" />
+		<circle opacity=".4" cx="0" cy="-6.25" r="1.25" transform="rotate(-60)" />
+		<circle opacity=".2" cx="0" cy="-6.25" r="1.25" transform="rotate(-80)" />
 		<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2s" repeatCount="indefinite" />
 	</g>
 </svg>`,
