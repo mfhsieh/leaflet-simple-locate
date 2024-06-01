@@ -54,6 +54,24 @@
 	<rect width="4" height="1.5" x="11.5" y="7.25" ry="0.5" rx="0.5" />
 	<circle cx="8" cy="8" r="1" />
 </svg>`,
+            htmlSpinner: `
+<svg width="16" height="16" viewBox="-8 -8 16 16" xmlns="http://www.w3.org/2000/svg">
+	<g>
+		<circle opacity="1" cx="0" cy="-6" r="1.5" />
+		<circle opacity=".917" cx="0" cy="-6" r="1.5" transform="rotate(30)" />
+		<circle opacity=".833" cx="0" cy="-6" r="1.5" transform="rotate(60)" />
+		<circle opacity=".750" cx="0" cy="-6" r="1.5" transform="rotate(90)" />
+		<circle opacity=".667" cx="0" cy="-6" r="1.5" transform="rotate(120)" />
+		<circle opacity=".583" cx="0" cy="-6" r="1.5" transform="rotate(150)" />
+		<circle opacity=".500" cx="0" cy="-6" r="1.5" transform="rotate(180)" />
+		<circle opacity=".417" cx="0" cy="-6" r="1.5" transform="rotate(210)" />
+		<circle opacity=".333" cx="0" cy="-6" r="1.5" transform="rotate(240)" />
+		<circle opacity=".250" cx="0" cy="-6" r="1.5" transform="rotate(270)" />
+		<circle opacity=".167" cx="0" cy="-6" r="1.5" transform="rotate(300)" />
+		<circle opacity=".083" cx="0" cy="-6" r="1.5" transform="rotate(330)" />
+		<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2s" repeatCount="indefinite" />
+	</g>
+</svg>`,
             htmlGeolocation: `
 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
 	<path d="M 13.329384,2.6706085 C 13.133096,2.4743297 12.77601,2.4382611 12.303066,2.6103882 L 6.6307133,4.6742285 1.1816923,6.6577732 C 1.0668479,6.6995703 0.95157337,6.752486 0.83540381,6.8133451 0.27343954,7.1201064 0.41842508,7.4470449 1.2644998,7.5962244 l 6.0688263,1.0701854 1.0714872,6.0698222 c 0.1491847,0.84604 0.4751513,0.990031 0.7816575,0.427825 0.060857,-0.116165 0.1137803,-0.231436 0.1555779,-0.346273 L 11.324426,9.3702482 13.389608,3.6968841 C 13.56174,3.2239596 13.52567,2.8668883 13.329392,2.6706094 Z" />
@@ -200,6 +218,8 @@
                     }
 
                     this._clicked = true;
+                    this._updateButton();
+
                     this._checkGeolocation().then((event) => {
                         // console.log("_checkGeolocation", new Date().toISOString(), "success!");
                         this._geolocation = true;
@@ -332,6 +352,11 @@
         },
 
         _updateButton: function () {
+            if (typeof this._geolocation === "undefined" || typeof this._orientation === "undefined") {
+                this._button.innerHTML = this.options.htmlSpinner;
+                return;
+            }
+
             if (this._orientation) this._button.innerHTML = this.options.htmlOrientation;
             else if (this._geolocation) this._button.innerHTML = this.options.htmlGeolocation;
             else this._button.innerHTML = this.options.htmlInit;
