@@ -67,6 +67,7 @@
                 if (!result.orientation) console.log("Orientation Error");
                 document.getElementById("leaflet-simple-locate-icon-spot").addEventListener("click", (event) => {
                     let latlng = marker.getLatLng();
+                    console.log(latlng);
                     popup = L.popup()
                         .setLatLng(latlng)
                         .setContent(`(lat: ${latlng.lat}, lng: ${latlng.lng})`)
