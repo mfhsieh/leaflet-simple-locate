@@ -34,14 +34,16 @@
     const control = L.Control.extend({
         options: {
             className: "",
-            initSetView: true,
-            defaultZoomLevel: undefined,
-            title: "Locate Geolocation and Orientation",
-            ariaLabel: "",
-            afterClick: null,  // callback for button clicked
+            title: "Locate Geolocation and Orientation",  // title for button
+            ariaLabel: "",  // aria-label for button
+            afterClick: null,  // callback after button clicked
 
-            _clickTimeoutDelay: 300,  // interval(millisecond) for double click
-            _minOrientationAngle: 3,  // min value between orientation angle changed
+            initSetView: true,  // set the map view after button clicked. true or false.
+            defaultZoomLevel: undefined,  // map zoom level after button clicked. undefined or number
+            drawCircle: true,  // draw a circle indicating the location accuracy. true or false
+
+            _clickTimeoutDelay: 400,  // maximum interval(millisecond) for double click
+            _minAngleChange: 3,  // minimum angle change to trigger an update
 
             htmlInit: `
 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -251,6 +253,9 @@
             this._map.stopLocate();
             this._map.off("locationfound", this._onLocationFound, this);
             this._map.off("locationerror", this._onLocationError, this);
+            this._map.off("zoomstart", this._onZoomStart, this);
+            this._map.off("zoomend", this._onZoomEnd, this);
+
             if (this._circle) {
                 this._map.removeLayer(this._circle);
                 this._circle = undefined;
@@ -285,7 +290,7 @@
         },
 
         _onLocationError: function (event) {
-            console.log("_onLocationError", new Date().toISOString(), event.code, event.message);
+            // console.log("_onLocationError", new Date().toISOString(), event.code, event.message);
         },
 
         _onOrientation: function (event) {
@@ -295,7 +300,7 @@
             if (event.webkitCompassHeading) angle = event.webkitCompassHeading;
             else angle = 360 - event.alpha;  // todos: test needed...
 
-            if (this._angle && Math.abs(angle, this._angle) < this.options._minOrientationAngle) return;
+            if (this._angle && Math.abs(angle, this._angle) < this.options._minAngleChange) return;
             this._angle = angle;
 
             if ("orientation" in screen) this._angle += screen.orientation.angle;
@@ -331,7 +336,7 @@
             if (this._circle) {
                 this._circle.setLatLng([this._latitude, this._longitude]);
                 this._circle.setRadius(this._accuracy);
-            } else
+            } else if (this.options.drawCircle)
                 this._circle = L.circle([this._latitude, this._longitude], {
                     radius: this._accuracy,
                     className: "leaflet-simple-locate-circle",
