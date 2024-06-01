@@ -65,19 +65,23 @@
                 if (!result.geolocation) console.log("Geolocation Error");
                 if (!result.orientation) console.log("Orientation Error");
 
-                const elem = document.getElementById("leaflet-simple-locate-icon-spot");
-                if (elem)
-                    elem.addEventListener("click", (event) => {
-                        let latlng = marker.getLatLng();
-                        console.log(latlng);
-                        L.popup()
-                            .setLatLng(latlng)
-                            .setContent(`(lat: ${latlng.lat}, lng: ${latlng.lng})`)
-                            .openOn(map);
+                let timer = setInterval(() => {
+                    const elem = document.getElementById("leaflet-simple-locate-icon-spot");
+                    if (elem) {
+                        clearTimeout(timer);
+                        elem.addEventListener("click", (event) => {
+                            let latlng = marker.getLatLng();
+                            console.log(latlng);
+                            L.popup()
+                                .setLatLng(latlng)
+                                .setContent(`(lat: ${latlng.lat}, lng: ${latlng.lng})`)
+                                .openOn(map);
 
-                        event.stopPropagation();
-                        event.preventDefault();
-                    });
+                            event.stopPropagation();
+                            event.preventDefault();
+                        });
+                    };
+                }, 200);
             },
         }).addTo(map);
     </script>
