@@ -37,6 +37,7 @@
             title: "Locate Geolocation and Orientation",  // title for button
             ariaLabel: "",  // aria-label for button
             afterClick: null,  // callback after button clicked
+            afterMarkerAdded: null,
 
             setViewAfterClick: true,  // set the map view after button clicked. true or false.
             defaultZoomLevel: undefined,  // map zoom level after button clicked. undefined or number
@@ -403,8 +404,15 @@
                 if (this._marker) this._map.removeLayer(this._marker);
                 this._marker = L.marker([this._latitude, this._longitude], {
                     icon: this.options[icon_name],
-                }).addTo(this._map);
+                });
                 this._marker.icon_name = icon_name;
+
+                if (this.options.afterMarkerAdded)
+                    this._map.on("layeradd", (event) => {
+                        if (event.layer === this._marker) this.options.afterMarkerAdded();
+                    });
+
+                this._marker.addTo(this._map);
             }
         },
 
