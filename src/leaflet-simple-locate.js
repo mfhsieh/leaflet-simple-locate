@@ -349,17 +349,17 @@
 
         _updateButton: function () {
             if (!this._clicked) {
-                if (this._button.innerHTML != this.options.htmlInit) this._button.innerHTML = this.options.htmlInit;
+                if (this._button.innerHTML !== this.options.htmlInit) this._button.innerHTML = this.options.htmlInit;
                 return;
             }
 
             if (typeof this._geolocation === "undefined" || typeof this._orientation === "undefined") {
-                if (this._button.innerHTML != this.options.htmlSpinner) this._button.innerHTML = this.options.htmlSpinner;
+                if (this._button.innerHTML !== this.options.htmlSpinner) this._button.innerHTML = this.options.htmlSpinner;
                 return;
             }
 
-            if (this._orientation && this._button.innerHTML != this.options.htmlOrientation) this._button.innerHTML = this.options.htmlOrientation;
-            else if (this._geolocation && this._button.innerHTML != this.options.htmlGeolocation) this._button.innerHTML = this.options.htmlGeolocation;
+            if (this._orientation && this._button.innerHTML !== this.options.htmlOrientation) this._button.innerHTML = this.options.htmlOrientation;
+            else if (this._geolocation && this._button.innerHTML !== this.options.htmlGeolocation) this._button.innerHTML = this.options.htmlGeolocation;
         },
 
         _updateMarker: function () {
