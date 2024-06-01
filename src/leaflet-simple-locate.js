@@ -388,6 +388,7 @@
             if (this._geolocation && this._orientation && this._angle) icon_name = "iconOrientation";
             else if (this._geolocation) icon_name = "iconGeolocation";
             else return;
+            console.log("_updateMarker", new Date().toISOString(), icon_name);
 
             if (this._circle) {
                 this._circle.setLatLng([this._latitude, this._longitude]);
@@ -401,7 +402,7 @@
             if (this._marker && this._marker.icon_name === icon_name)
                 this._marker.setLatLng([this._latitude, this._longitude]);
             else {
-                console.log("_updateMarker", new Date().toISOString(), icon_name);
+                console.log("_updateMarker: new", new Date().toISOString(), icon_name);
                 if (this._marker) this._map.removeLayer(this._marker);
                 this._marker = L.marker([this._latitude, this._longitude], {
                     icon: this.options[icon_name],
