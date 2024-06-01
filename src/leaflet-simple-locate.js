@@ -401,6 +401,7 @@
             if (this._marker && this._marker.icon_name === icon_name)
                 this._marker.setLatLng([this._latitude, this._longitude]);
             else {
+                console.log("_updateMarker", new Date().toISOString(), icon_name);
                 if (this._marker) this._map.removeLayer(this._marker);
                 this._marker = L.marker([this._latitude, this._longitude], {
                     icon: this.options[icon_name],
@@ -409,10 +410,7 @@
 
                 if (this.options.afterMarkerAdded)
                     this._map.on("layeradd", (event) => {
-                        if (event.layer === this._marker) {
-                            // console.log("_updateMarker", new Date().toISOString(), this._marker.icon_name);
-                            this.options.afterMarkerAdded();
-                        }
+                        if (event.layer === this._marker) this.options.afterMarkerAdded();
                     });
 
                 this._marker.addTo(this._map);
