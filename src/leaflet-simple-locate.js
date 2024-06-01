@@ -358,7 +358,6 @@
 
             if (typeof this._geolocation === "undefined" || typeof this._orientation === "undefined") {
                 if (this._button.html_name !== "spinner") {
-                    console.log("spinner");
                     this._button.innerHTML = this.options.htmlSpinner;
                     this._button.html_name = "spinner";
                 }
