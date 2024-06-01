@@ -69,6 +69,7 @@
                 if (elem)
                     elem.addEventListener("click", (event) => {
                         let latlng = marker.getLatLng();
+                        console.log(latlng);
                         L.popup()
                             .setLatLng(latlng)
                             .setContent(`(lat: ${latlng.lat}, lng: ${latlng.lng})`)
