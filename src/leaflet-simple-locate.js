@@ -349,17 +349,32 @@
 
         _updateButton: function () {
             if (!this._clicked) {
-                if (this._button.innerHTML !== this.options.htmlInit) this._button.innerHTML = this.options.htmlInit;
+                if (this._button.html_name !== "init") {
+                    this._button.innerHTML = this.options.htmlInit;
+                    this._button.html_name = "init";
+                }
                 return;
             }
 
             if (typeof this._geolocation === "undefined" || typeof this._orientation === "undefined") {
-                if (this._button.innerHTML !== this.options.htmlSpinner) this._button.innerHTML = this.options.htmlSpinner;
+                if (this._button.html_name !== "spinner") {
+                    console.log("spinner");
+                    this._button.innerHTML = this.options.htmlSpinner;
+                    this._button.html_name = "spinner";
+                }
                 return;
             }
 
-            if (this._orientation && this._button.innerHTML !== this.options.htmlOrientation) this._button.innerHTML = this.options.htmlOrientation;
-            else if (this._geolocation && this._button.innerHTML !== this.options.htmlGeolocation) this._button.innerHTML = this.options.htmlGeolocation;
+            if (this._orientation && this._button.html_name !== "orientation") {
+                this._button.innerHTML = this.options.htmlOrientation;
+                this._button.html_name = "orientation";
+                return;
+            }
+
+            if (this._geolocation && this._button.html_name !== "geolocation") {
+                this._button.innerHTML = this.options.htmlGeolocation;
+                this._button.html_name = "geolocation";
+            }
         },
 
         _updateMarker: function () {
