@@ -57,6 +57,7 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
         }).addTo(map);
 
+        let flag;
         let control = new L.Control.SimpleLocate({
             position: "topleft",
             className: "button-locate",
@@ -69,7 +70,7 @@
             afterMarkerAdded: () => {
                 console.log("afterMarkerAdded");
                 const elem = document.getElementById("leaflet-simple-locate-icon-spot");
-                if (elem)
+                if (elem && !flag) {
                     elem.addEventListener("click", (event) => {
                         let latlng = control.getLatLng();
                         console.log("leaflet-simple-locate-icon-spot", latlng);
@@ -82,6 +83,8 @@
                         event.stopPropagation();
                         event.preventDefault();
                     });
+                    flag = true;
+                }
             },
         }).addTo(map);
     </script>
