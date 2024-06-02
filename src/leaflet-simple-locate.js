@@ -446,7 +446,6 @@
                 this._marker.addTo(this._map);
             }
         },
-
     });
 
     return control;

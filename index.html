@@ -73,11 +73,16 @@
                     elem.addEventListener("click", (event) => {
                         const latlng = control.getLatLng();
                         const latlng_str = `(lat: ${Math.round(latlng.lat * 100000) / 100000}, lng: ${Math.round(latlng.lng * 100000) / 100000})`;
-                        console.log("leaflet-simple-locate-icon-spot click", latlng_str);
+
+                        const accuracy = control.getAccuracy();
+                        const accuracy_str = `accuracy: ${Math.round(accuracy)} meter`;
+
+                        const angle = control.getAngle();
+                        const angle_str = `angle: ${Math.round(angle)} degree`;
 
                         L.popup()
                             .setLatLng(latlng)
-                            .setContent(latlng_str)
+                            .setContent(`<p>${latlng_str}</p><p>${accuracy_str}</p><p>${angle_str}</p>`)
                             .openOn(map);
 
                         event.stopPropagation();
