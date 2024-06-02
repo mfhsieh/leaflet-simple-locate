@@ -36,15 +36,17 @@
             className: "",
             title: "Locate Geolocation and Orientation",  // title for button
             ariaLabel: "",  // aria-label for button
-            afterClick: null,  // callback after button clicked
-            afterMarkerAdd: null,  // callback after marker added
+
+            minAngleChange: 3,  // minimum angle change to trigger an update
+            clickTimeoutDelay: 500,  // maximum interval(millisecond) for double click
 
             setViewAfterClick: true,  // set the map view after button clicked. true or false.
             zoomLevel: undefined,  // zoom map after button clicked. undefined or a number
             drawCircle: true,  // draw a circle indicating the location accuracy. true or false
 
-            _clickTimeoutDelay: 500,  // maximum interval(millisecond) for double click
-            _minAngleChange: 3,  // minimum angle change to trigger an update
+            afterClick: null,  // callback after button clicked
+            afterMarkerAdd: null,  // callback after marker added
+            afterDeviceMove: null,  // callback after lat, lng, angle changed
 
             htmlInit: `
 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -173,6 +175,16 @@
             };
         },
 
+        getAccuracy: function () {
+            if (!this._accuracy) return null;
+            return this._accuracy;
+        },
+
+        getAngle: function () {
+            if (!this._angle) return null;
+            return this._angle;
+        },
+
         setZoomLevel: function (level) {
             this.options.zoomLevel = level;
         },
@@ -232,7 +244,7 @@
                         this._orientation = false;
                         this._checkClickResult();
                     });
-                }, this.options._clickTimeoutDelay);
+                }, this.options.clickTimeoutDelay);
             }
         },
 
@@ -334,7 +346,7 @@
             if (event.webkitCompassHeading) angle = event.webkitCompassHeading;
             else angle = 360 - event.alpha;  // todos: test needed...
 
-            if (this._angle && Math.abs(angle, this._angle) < this.options._minAngleChange) return;
+            if (this._angle && Math.abs(angle - this._angle) < this.options.minAngleChange) return;
             this._angle = angle;
 
             if ("orientation" in screen) this._angle += screen.orientation.angle;
@@ -399,6 +411,13 @@
         },
 
         _updateMarker: function () {
+            if (this.options.afterDeviceMove) this.options.afterDeviceMove({
+                lat: this._latitude,
+                lng: this._longitude,
+                accuracy: this._accuracy,
+                angle: this._angle,
+            });
+
             if (!this._latitude || !this._longitude || (this.options.drawCircle && !this._accuracy)) return;
 
             let icon_name;

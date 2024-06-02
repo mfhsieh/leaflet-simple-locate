@@ -73,7 +73,7 @@
                     elem.addEventListener("click", (event) => {
                         const latlng = control.getLatLng();
                         const latlng_str = `(lat: ${Math.round(latlng.lat * 100000) / 100000}, lng: ${Math.round(latlng.lng * 100000) / 100000})`;
-                        console.log("leaflet-simple-locate-icon-spot", latlng_str);
+                        console.log("leaflet-simple-locate-icon-spot click", latlng_str);
 
                         L.popup()
                             .setLatLng(latlng)
@@ -85,6 +85,9 @@
                     });
                 }
             },
+            afterDeviceMove: (event) => {
+                console.log(event);
+            }
         }).addTo(map);
     </script>
 </body>
