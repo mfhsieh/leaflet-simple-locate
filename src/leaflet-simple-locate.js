@@ -37,10 +37,10 @@
             title: "Locate Geolocation and Orientation",  // title for button
             ariaLabel: "",  // aria-label for button
             afterClick: null,  // callback after button clicked
-            afterMarkerAdded: null,
+            afterMarkerAdd: null,  // callback after marker added
 
             setViewAfterClick: true,  // set the map view after button clicked. true or false.
-            defaultZoomLevel: undefined,  // map zoom level after button clicked. undefined or number
+            zoomLevel: undefined,  // zoom map after button clicked. undefined or a number
             drawCircle: true,  // draw a circle indicating the location accuracy. true or false
 
             _clickTimeoutDelay: 500,  // maximum interval(millisecond) for double click
@@ -174,26 +174,10 @@
         },
 
         setZoomLevel: function (level) {
-            this.options.defaultZoomLevel = level;
+            this.options.zoomLevel = level;
         },
 
         _onClick: async function () {
-            function checkResult() {
-                this._updateButton();
-
-                if (this._geolocation === false && this._orientation === false) {
-                    this._clicked = undefined;
-                    this._geolocation = undefined;
-                    this._orientation = undefined;
-                }
-
-                if (this.options.afterClick && typeof this._geolocation !== "undefined" && typeof this._orientation !== "undefined")
-                    this.options.afterClick({
-                        geolocation: this._geolocation,
-                        orientation: this._orientation,
-                    });
-            }
-
             if (this._clickTimeout) {
                 // console.log("_onClick: double click", new Date().toISOString());
                 clearTimeout(this._clickTimeout);
@@ -206,6 +190,7 @@
                     this._geolocation = undefined;
                     this._orientation = undefined;
                     this._updateButton();
+                    this._map.off("layeradd", this._onLayerAdd, this);
                 }
             } else {
                 this._clickTimeout = setTimeout(() => {
@@ -222,31 +207,48 @@
 
                     this._clicked = true;
                     this._updateButton();
+                    this._map.on("layeradd", this._onLayerAdd, this);
 
                     this._checkGeolocation().then((event) => {
                         // console.log("_checkGeolocation", new Date().toISOString(), "success!");
                         this._geolocation = true;
                         this._onLocationFound(event.coords);
-                        this._watchGeolocation();
                         if (this.options.setViewAfterClick) this._setView();
-                        checkResult.bind(this)();
+                        this._watchGeolocation();
+                        this._checkClickResult();
                     }).catch(() => {
                         // console.log("_checkGeolocation", new Date().toISOString(), "failed!");
                         this._geolocation = false;
-                        checkResult.bind(this)();
+                        this._checkClickResult();
                     });
 
                     this._checkOrientation().then(() => {
                         // console.log("_checkOrientation", new Date().toISOString(), "success!");
                         this._orientation = true;
                         this._watchOrientation();
-                        checkResult.bind(this)();
+                        this._checkClickResult();
                     }).catch(() => {
                         // console.log("_checkOrientation", new Date().toISOString(), "failed!");
                         this._orientation = false;
-                        checkResult.bind(this)();
+                        this._checkClickResult();
                     });
                 }, this.options._clickTimeoutDelay);
+            }
+        },
+
+        _checkClickResult: function () {
+            this._updateButton();
+
+            if (this.options.afterClick && typeof this._geolocation !== "undefined" && typeof this._orientation !== "undefined")
+                this.options.afterClick({
+                    geolocation: this._geolocation,
+                    orientation: this._orientation,
+                });
+
+            if (this._geolocation === false && this._orientation === false) {
+                this._clicked = undefined;
+                this._geolocation = undefined;
+                this._orientation = undefined;
             }
         },
 
@@ -328,7 +330,6 @@
 
         _onOrientation: function (event) {
             // console.log("_onOrientation", new Date().toISOString(), event.absolute, event.alpha, event.beta, event.gamma);
-
             let angle;
             if (event.webkitCompassHeading) angle = event.webkitCompassHeading;
             else angle = 360 - event.alpha;  // todos: test needed...
@@ -350,6 +351,22 @@
 
         _onZoomEnd: function () {
             if (this._circle) this._map.addLayer(this._circle);
+        },
+
+        _onLayerAdd: function (event) {
+            if (this.options.afterMarkerAdd && event.layer == this._marker) {
+                // console.log("_onLayerAdd", new Date().toISOString(), event.layer.icon_name ? event.layer.icon_name : "undefined", event.layer);
+                this.options.afterMarkerAdd();
+            }
+        },
+
+        _setView: function () {
+            if (!this._map || !this._latitude || !this._longitude) return;
+
+            if (this.options.zoomLevel)
+                this._map.setView([this._latitude, this._longitude], this.options.zoomLevel);
+            else
+                this._map.setView([this._latitude, this._longitude]);
         },
 
         _updateButton: function () {
@@ -401,30 +418,16 @@
             if (this._marker && this._marker.icon_name === icon_name)
                 this._marker.setLatLng([this._latitude, this._longitude]);
             else {
-                console.log("_updateMarker", new Date().toISOString(), this._marker ? this._marker.icon_name : "null", icon_name);
+                // console.log("_updateMarker", new Date().toISOString(), this._marker ? this._marker.icon_name : "undefined", icon_name);
                 if (this._marker) this._map.removeLayer(this._marker);
                 this._marker = L.marker([this._latitude, this._longitude], {
                     icon: this.options[icon_name],
                 });
                 this._marker.icon_name = icon_name;
-
-                if (this.options.afterMarkerAdded)
-                    this._map.on("layeradd", (event) => {
-                        if (event.layer === this._marker) this.options.afterMarkerAdded();
-                    });
-
                 this._marker.addTo(this._map);
             }
         },
 
-        _setView: function () {
-            if (!this._map || !this._latitude || !this._longitude) return;
-
-            if (this.options.defaultZoomLevel)
-                this._map.setView([this._latitude, this._longitude], this.options.defaultZoomLevel);
-            else
-                this._map.setView([this._latitude, this._longitude]);
-        },
     });
 
     return control;

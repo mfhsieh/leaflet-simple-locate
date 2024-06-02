@@ -42,19 +42,6 @@
             document.documentElement.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
         }
 
-        function handleSpotClick(event) {
-            let latlng = control.getLatLng();
-            console.log("leaflet-simple-locate-icon-spot", latlng);
-
-            L.popup()
-                .setLatLng(latlng)
-                .setContent(`(lat: ${latlng.lat}, lng: ${latlng.lng})`)
-                .openOn(map);
-
-            event.stopPropagation();
-            event.preventDefault();
-        }
-
         set_viewport();
         window.addEventListener("resize", set_viewport);
 
@@ -70,23 +57,32 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
         }).addTo(map);
 
-        let elem_old;
-        let control = new L.Control.SimpleLocate({
+        const control = new L.Control.SimpleLocate({
             position: "topleft",
             className: "button-locate",
-            defaultZoomLevel: 17,
+            zoomLevel: 17,
             afterClick: (result) => {
                 console.log("afterClick");
                 if (!result.geolocation) console.log("Geolocation Error");
                 if (!result.orientation) console.log("Orientation Error");
             },
-            afterMarkerAdded: () => {
+            afterMarkerAdd: () => {
                 console.log("afterMarkerAdded");
                 const elem = document.getElementById("leaflet-simple-locate-icon-spot");
                 if (elem) {
-                    if (elem_old) elem_old.removeEventListener("click", handleSpotClick);
-                    elem.addEventListener("click", handleSpotClick);
-                    elem_old = elem;
+                    elem.addEventListener("click", (event) => {
+                        const latlng = control.getLatLng();
+                        const latlng_str = `(lat: ${Math.round(latlng.lat * 100000) / 100000}, lng: ${Math.round(latlng.lng * 100000) / 100000})`;
+                        console.log("leaflet-simple-locate-icon-spot", latlng_str);
+
+                        L.popup()
+                            .setLatLng(latlng)
+                            .setContent(latlng_str)
+                            .openOn(map);
+
+                        event.stopPropagation();
+                        event.preventDefault();
+                    });
                 }
             },
         }).addTo(map);
