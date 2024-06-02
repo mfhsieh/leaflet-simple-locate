@@ -29,6 +29,11 @@
             height: calc(var(--vh, 1vh) * 100);
             width: 100vw;
         }
+
+        .leaflet-control-scale-line {
+            color: rgba(var(--primary-rgb), 1);
+            border-color: rgba(var(--primary-rgb), 1);
+        }
     </style>
 </head>
 
@@ -55,6 +60,12 @@
             minZoom: 7,
             maxZoom: 19,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+        }).addTo(map);
+
+        L.control.scale({
+            position: 'bottomleft',
+            metric: true,
+            imperial: false,
         }).addTo(map);
 
         const control = new L.Control.SimpleLocate({
