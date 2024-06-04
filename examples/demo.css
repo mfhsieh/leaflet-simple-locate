@@ -46,6 +46,10 @@
     -moz-user-select: none;
     -ms-user-select: none;
     -khtml-user-select: none;
+    text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
 }
 
 .leaflet-simple-locate svg {
