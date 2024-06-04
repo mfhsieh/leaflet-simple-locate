@@ -13,6 +13,15 @@
  * git@github.com:mfhsieh/leaflet-simple-locate.git 
  * 
  */
+@-moz-document url-prefix() {
+
+    .leaflet-simple-locate .fa,
+    .leaflet-simple-locate .fas {
+        margin-top: .05rem;
+        margin-bottom: -.05rem;
+    }
+}
+
 .leaflet-simple-locate {
     display: flex;
     align-items: center;
