@@ -61,11 +61,11 @@
 <svg width="16" height="16" viewBox="-8 -8 16 16" xmlns="http://www.w3.org/2000/svg">
 	<g>
 		<circle opacity="1" cx="0" cy="-6" r="1.5" />
-		<circle opacity=".92" cx="0" cy="-6" r="1.5" transform="rotate(-30)" />
-		<circle opacity=".76" cx="0" cy="-6" r="1.5" transform="rotate(-60)" />
-		<circle opacity=".52" cx="0" cy="-6" r="1.5" transform="rotate(-90)" />
-		<circle opacity=".20" cx="0" cy="-6" r="1.5" transform="rotate(-120)" />
-		<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2s" repeatCount="indefinite" />
+		<circle opacity=".92" cx="0" cy="-6" r="1.38" transform="rotate(-30)" />
+		<circle opacity=".76" cx="0" cy="-6" r="1.14" transform="rotate(-60)" />
+		<circle opacity=".52" cx="0" cy="-6" r=".78" transform="rotate(-90)" />
+		<circle opacity=".20" cx="0" cy="-6" r=".3" transform="rotate(-120)" />
+		<animateTransform attributeName="transform" type="rotate" values="0;0;30;30;60;60;90;90;120;120;150;150;180;180;210;210;240;240;270;270;300;300;330;330;360" keyTimes="0;.0833;.0833;.1667;.1667;.25;.25;.3333;.3333;.4167;.4167;.5;.5;.5833;.5833;.6667;.6667;.75;.75;.8333;.8333;.9167;.9167;1;1" dur="2s" repeatCount="indefinite" />
 	</g>
 </svg>`,
             htmlGeolocation: `
@@ -358,11 +358,11 @@
         },
 
         _onZoomStart: function () {
-            if (this._circle) this._map.removeLayer(this._circle);
+            if (this._circle) document.documentElement.style.setProperty("--leaflet-simple-locate-circle-display", "none");
         },
 
         _onZoomEnd: function () {
-            if (this._circle) this._map.addLayer(this._circle);
+            if (this._circle) document.documentElement.style.setProperty("--leaflet-simple-locate-circle-display", "inline");
         },
 
         _onLayerAdd: function (event) {

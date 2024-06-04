@@ -94,6 +94,7 @@
 }
 
 .leaflet-simple-locate-circle {
+    display: var(--leaflet-simple-locate-circle-display);
     fill: rgba(var(--primary-rgb), 1);
     fill-opacity: .1;
     stroke: rgba(var(--primary-rgb), 1);
