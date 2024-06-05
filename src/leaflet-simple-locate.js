@@ -331,6 +331,7 @@
 
         _onLocationFound: function (event) {
             // console.log("_onLocationFound", new Date().toISOString(), event.latitude, event.longitude, event.accuracy);
+            if (Math.round(this._latitude * 1000000) === Math.round(event.latitude * 1000000) && Math.round(this._longitude * 1000000) === Math.round(event.longitude * 1000000) && Math.round(this._accuracy * 100) === Math.round(event.accuracy * 100)) return;
             this._latitude = event.latitude;
             this._longitude = event.longitude;
             this._accuracy = event.accuracy;
