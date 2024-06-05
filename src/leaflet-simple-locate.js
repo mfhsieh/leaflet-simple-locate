@@ -443,6 +443,7 @@
                 if (this._marker) this._map.removeLayer(this._marker);
                 this._marker = L.marker([this._latitude, this._longitude], {
                     icon: this.options[icon_name],
+                    bubblingMouseEvents: true,
                 });
                 this._marker.icon_name = icon_name;
                 this._marker.addTo(this._map);
