@@ -96,6 +96,7 @@
 
 .leaflet-simple-locate-icon {
     fill: rgba(var(--primary-rgb), 1);
+    pointer-events: none !important;
     cursor: grab;
 }
 
@@ -114,9 +115,11 @@
     stroke: rgba(var(--primary-rgb), 1);
     stroke-width: 1;
     stroke-opacity: .3;
+    pointer-events: none !important;
     cursor: grab;
 }
 
 #leaflet-simple-locate-icon-spot {
+    pointer-events: auto;
     cursor: pointer;
 }

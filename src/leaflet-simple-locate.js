@@ -37,7 +37,6 @@
             title: "Locate Geolocation and Orientation",  // title for button
             ariaLabel: "",  // aria-label for button
 
-            bubblingIconMouseEvents: true,
             minAngleChange: 3,  // minimum angle change to trigger an update
             clickTimeoutDelay: 500,  // maximum interval(millisecond) for double click
 
@@ -81,7 +80,7 @@
 </svg>`,
             iconGeolocation: L.divIcon({
                 html: `
-<svg class="leaflet-simple-locate-icon" width="24" height="24" viewBox="-12 -12 24 24" xmlns="http://www.w3.org/2000/svg">
+<svg width="24" height="24" viewBox="-12 -12 24 24" xmlns="http://www.w3.org/2000/svg">
 	<defs>
 		<filter id="gaussian">
 			<feGaussianBlur stdDeviation="0.5" />
@@ -95,13 +94,13 @@
 		</circle>
 	</g>
 </svg>`,
-                className: "",
+                className: "leaflet-simple-locate-icon",
                 iconSize: [24, 24],
                 iconAnchor: [12, 12],
             }),
             iconOrientation: L.divIcon({
                 html: `
-<svg class="leaflet-simple-locate-icon" width="96" height="96" viewBox="-48 -48 96 96" xmlns="http://www.w3.org/2000/svg">
+<svg width="96" height="96" viewBox="-48 -48 96 96" xmlns="http://www.w3.org/2000/svg">
 	<defs>
 		<linearGradient id="gradient" x2="0" y2="-48" gradientUnits="userSpaceOnUse">
 			<stop style="stop-opacity:1" offset="0" />
@@ -122,7 +121,7 @@
 		</circle>
 	</g>
 </svg>`,
-                className: "",
+                className: "leaflet-simple-locate-icon",
                 iconSize: [96, 96],
                 iconAnchor: [48, 48],
             }),
@@ -433,8 +432,8 @@
                 this._circle.setRadius(this._accuracy);
             } else if (this.options.drawCircle)
                 this._circle = L.circle([this._latitude, this._longitude], {
-                    radius: this._accuracy,
                     className: "leaflet-simple-locate-circle",
+                    radius: this._accuracy,
                 }).addTo(this._map);
 
             if (this._marker && this._marker.icon_name === icon_name)
@@ -444,7 +443,6 @@
                 if (this._marker) this._map.removeLayer(this._marker);
                 this._marker = L.marker([this._latitude, this._longitude], {
                     icon: this.options[icon_name],
-                    bubblingMouseEvents: this.options.bubblingIconMouseEvents,
                 });
                 this._marker.icon_name = icon_name;
                 this._marker.addTo(this._map);
