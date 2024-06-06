@@ -37,6 +37,7 @@
             title: "Locate Geolocation and Orientation",  // title for button
             ariaLabel: "",  // aria-label for button
 
+            bubblingIconMouseEvents: true,
             minAngleChange: 3,  // minimum angle change to trigger an update
             clickTimeoutDelay: 500,  // maximum interval(millisecond) for double click
 
@@ -270,7 +271,7 @@
                 return Promise.reject();
 
             return new Promise((resolve, reject) => {
-                navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true });
+                navigator.geolocation.getCurrentPosition(resolve, reject, { maximumAge: 0, enableHighAccuracy: true });
             });
         },
 
@@ -443,7 +444,7 @@
                 if (this._marker) this._map.removeLayer(this._marker);
                 this._marker = L.marker([this._latitude, this._longitude], {
                     icon: this.options[icon_name],
-                    bubblingMouseEvents: true,
+                    bubblingMouseEvents: this.options.bubblingIconMouseEvents,
                 });
                 this._marker.icon_name = icon_name;
                 this._marker.addTo(this._map);
