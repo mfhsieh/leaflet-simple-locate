@@ -61,11 +61,11 @@
 <svg width="16" height="16" viewBox="-8 -8 16 16" xmlns="http://www.w3.org/2000/svg">
 	<g>
 		<circle opacity="1" cx="0" cy="-6" r="1.5" />
-		<circle opacity=".95" cx="0" cy="-6" r="1.42" transform="rotate(-30)" />
-		<circle opacity=".85" cx="0" cy="-6" r="1.26" transform="rotate(-60)" />
-		<circle opacity=".7" cx="0" cy="-6" r="1.02" transform="rotate(-90)" />
-		<circle opacity=".5" cx="0" cy="-6" r=".7" transform="rotate(-120)" />
-		<circle opacity=".25" cx="0" cy="-6" r=".3" transform="rotate(-150)" />
+		<circle opacity=".95" cx="0" cy="-6" r="1.42" transform="rotate(-45)" />
+		<circle opacity=".85" cx="0" cy="-6" r="1.26" transform="rotate(-90)" />
+		<circle opacity=".7" cx="0" cy="-6" r="1.02" transform="rotate(-135)" />
+		<circle opacity=".5" cx="0" cy="-6" r=".7" transform="rotate(-180)" />
+		<circle opacity=".25" cx="0" cy="-6" r=".3" transform="rotate(-225)" />
 		<animateTransform attributeName="transform" type="rotate" values="0;0;30;30;60;60;90;90;120;120;150;150;180;180;210;210;240;240;270;270;300;300;330;330;360" keyTimes="0;.0833;.0833;.1667;.1667;.25;.25;.3333;.3333;.4167;.4167;.5;.5;.5833;.5833;.6667;.6667;.75;.75;.8333;.8333;.9167;.9167;1;1" dur="2s" repeatCount="indefinite" />
 	</g>
 </svg>`,
