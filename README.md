@@ -1,4 +1,4 @@
-Leaflet.Control.SimpleLocate
+Leaflet.SimpleLocate
 =
 
 A Leaflet plugin displaying device location and orientation on the map, with orientation adjusted according to screen rotation. Tested on desktop and mobile versions of Chrome, Edge, Firefox, and Safari.
@@ -55,7 +55,7 @@ For more examples, refer to this [demo](https://mfhsieh.github.io/leaflet-simple
 | zoomLevel         | Boolean   | undefined                                                                                                      | After clicking the button, zoom the map to this level.                                                |
 | drawCircle        | Boolean   | true                                                                                                           | Draw a circle to indicate location accuracy.                                                          |
 | minAngleChange    | Number    | 3                                                                                                              | The effect only occurs when the angle change (in degrees) exceeds this value.                         |
-| clickTimeoutDelay | Number    | 500                                                                                                            | Time interval (in ms) for detecting a double-click on the button.                                        |
+| clickTimeoutDelay | Number    | 500                                                                                                            | Time interval (in ms) for detecting a double-click on the button.                                     |
 | title             | String    | "Locate Geolocation and Orientation"                                                                           | The title attribute of the button.                                                                    |
 | ariaLabel         | String    | ""                                                                                                             | The aria-label attribute of the button. If its value is an empty string, it will be equal to "title". |
 | htmlInit          | String    | [html_init.svg](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/images/html_init.svg)               | The initial HTML content of the button.                                                               |
@@ -68,3 +68,9 @@ For more examples, refer to this [demo](https://mfhsieh.github.io/leaflet-simple
 # Where
 
 * Source Code: [Github](https://github.com/mfhsieh/leaflet-simple-locate)
+
+
+# Author
+
+* email: mfhsieh at gmail.com
+* Github: [Github](https://github.com/mfhsieh/)
