@@ -15,13 +15,13 @@
  */
 (function (factory) {
 
-    if (typeof define === 'function' && define.amd) {
+    if (typeof define === 'function' && define.amd) {  // eslint-disable-line no-undef
         // define an AMD module that relies on 'leaflet'
-        define(['leaflet'], factory);
+        define(['leaflet'], factory);  // eslint-disable-line no-undef
 
     } else if (typeof exports === 'object') {
         // define a Common JS module that relies on 'leaflet'
-        module.exports = factory(require('leaflet'));
+        module.exports = factory(require('leaflet'));  // eslint-disable-line no-undef
 
     } else if (typeof window !== 'undefined') {
         // attach your plugin to the global 'L' variable
@@ -60,13 +60,15 @@
             htmlSpinner: `
 <svg width="16" height="16" viewBox="-8 -8 16 16" xmlns="http://www.w3.org/2000/svg">
 	<g>
+		<circle opacity=".7" cx="0" cy="-6" r=".9" transform="rotate(90)" />
+		<circle opacity=".9" cx="0" cy="-6" r="1.3" transform="rotate(45)" />
 		<circle opacity="1" cx="0" cy="-6" r="1.5" />
 		<circle opacity=".95" cx="0" cy="-6" r="1.42" transform="rotate(-45)" />
 		<circle opacity=".85" cx="0" cy="-6" r="1.26" transform="rotate(-90)" />
 		<circle opacity=".7" cx="0" cy="-6" r="1.02" transform="rotate(-135)" />
 		<circle opacity=".5" cx="0" cy="-6" r=".7" transform="rotate(-180)" />
 		<circle opacity=".25" cx="0" cy="-6" r=".3" transform="rotate(-225)" />
-		<animateTransform attributeName="transform" type="rotate" values="0;0;30;30;60;60;90;90;120;120;150;150;180;180;210;210;240;240;270;270;300;300;330;330;360" keyTimes="0;.0833;.0833;.1667;.1667;.25;.25;.3333;.3333;.4167;.4167;.5;.5;.5833;.5833;.6667;.6667;.75;.75;.8333;.8333;.9167;.9167;1;1" dur="2s" repeatCount="indefinite" />
+		<animateTransform attributeName="transform" type="rotate" values="0;0;45;45;90;90;135;135;180;180;225;225;270;270;315;315;360" keyTimes="0;.125;.125;.25;.25;.375;.375;.5;.5;.675;.675;.75;.75;.875;.875;1;1" dur="1.3s" repeatCount="indefinite" />
 	</g>
 </svg>`,
             htmlGeolocation: `
@@ -266,7 +268,8 @@
         },
 
         _checkGeolocation: function () {
-            if (typeof navigator !== "object" || !"geolocation" in navigator || typeof navigator.geolocation.getCurrentPosition !== "function" || typeof navigator.geolocation.watchPosition !== "function")
+            if (typeof navigator !== "object" || !("geolocation" in navigator) ||
+                typeof navigator.geolocation.getCurrentPosition !== "function" || typeof navigator.geolocation.watchPosition !== "function")
                 return Promise.reject();
 
             return new Promise((resolve, reject) => {
@@ -291,7 +294,7 @@
             // console.log("_watchGeolocation");
             this._map.locate({ watch: true, enableHighAccuracy: true });
             this._map.on("locationfound", this._onLocationFound, this);
-            this._map.on("locationerror", this._onLocationError, this);
+            // this._map.on("locationerror", this._onLocationError, this);
             this._map.on("zoomstart", this._onZoomStart, this);
             this._map.on("zoomend", this._onZoomEnd, this);
         },
@@ -300,7 +303,7 @@
             // console.log("_unwatchGeolocation");
             this._map.stopLocate();
             this._map.off("locationfound", this._onLocationFound, this);
-            this._map.off("locationerror", this._onLocationError, this);
+            // this._map.off("locationerror", this._onLocationError, this);
             this._map.off("zoomstart", this._onZoomStart, this);
             this._map.off("zoomend", this._onZoomEnd, this);
 
@@ -338,9 +341,9 @@
             this._updateMarker();
         },
 
-        _onLocationError: function (event) {
-            // console.log("_onLocationError", new Date().toISOString(), event.code, event.message);
-        },
+        // _onLocationError: function (event) {
+        //     console.log("_onLocationError", new Date().toISOString(), event.code, event.message);
+        // },
 
         _onOrientation: function (event) {
             // console.log("_onOrientation", new Date().toISOString(), event.absolute, event.alpha, event.beta, event.gamma);

@@ -53,16 +53,6 @@
     -khtml-text-size-adjust: none;
 }
 
-.leaflet-simple-locate svg {
-    fill: rgba(var(--primary-rgb), 1);
-    width: 1.375rem;
-    height: 1.375rem;
-}
-
-.leaflet-simple-locate-orientation {
-    transform: rotate(var(--leaflet-simple-locate-orientation, 0deg));
-}
-
 /* .leaflet-simple-locate:hover,
 .leaflet-simple-locate:active {
     opacity: 1;
@@ -84,6 +74,12 @@
 
 .leaflet-simple-locate:focus-visible {
     border: .125rem solid rgba(0, 0, 0, 1);
+}
+
+.leaflet-simple-locate svg {
+    fill: rgba(var(--primary-rgb), 1);
+    width: 1.375rem;
+    height: 1.375rem;
 }
 
 .leaflet-simple-locate.button-locate {
@@ -117,6 +113,10 @@
     stroke-opacity: .3;
     pointer-events: none !important;
     cursor: grab;
+}
+
+.leaflet-simple-locate-orientation {
+    transform: rotate(var(--leaflet-simple-locate-orientation, 0deg));
 }
 
 #leaflet-simple-locate-icon-spot {
