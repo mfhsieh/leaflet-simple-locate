@@ -16,6 +16,7 @@
 @-moz-document url-prefix() {
 
     .leaflet-simple-locate .fa,
+    .leaflet-simple-locate .fab,
     .leaflet-simple-locate .far,
     .leaflet-simple-locate .fas {
         margin-top: .05rem;
