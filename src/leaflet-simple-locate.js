@@ -1,17 +1,17 @@
-/* 
- * Leaflet Control SimpleLocate v0.1 - 2024-05-24 
- * 
+/*
+ * Leaflet Control SimpleLocate v1.0.0 - 2024-6-15
+ *
  * Copyright 2024 mfhsieh
- * mfhsieh@gmail.com 
- * 
- * Licensed under the MIT license. 
- * 
- * Demos: 
+ * mfhsieh@gmail.com
+ *
+ * Licensed under the MIT license.
+ *
+ * Demos:
  * https://mfhsieh.github.io/leaflet-simple-locate/
- * 
- * Source: 
- * git@github.com:mfhsieh/leaflet-simple-locate.git 
- * 
+ *
+ * Source:
+ * git@github.com:mfhsieh/leaflet-simple-locate.git
+ *
  */
 (function (factory) {
 
@@ -34,19 +34,19 @@
     const control = L.Control.extend({
         options: {
             className: "",
-            title: "Locate Geolocation and Orientation",  // title for button
-            ariaLabel: "",  // aria-label for button
+            title: "Locate Geolocation and Orientation",
+            ariaLabel: "",
 
-            minAngleChange: 3,  // minimum angle change to trigger an update
-            clickTimeoutDelay: 500,  // maximum interval(millisecond) for double click
+            minAngleChange: 3,
+            clickTimeoutDelay: 500,
 
-            setViewAfterClick: true,  // set the map view after button clicked. true or false.
-            zoomLevel: undefined,  // zoom map after button clicked. undefined or a number
-            drawCircle: true,  // draw a circle indicating the location accuracy. true or false
+            setViewAfterClick: true,
+            zoomLevel: undefined,
+            drawCircle: true,
 
-            afterClick: null,  // callback after button clicked
-            afterMarkerAdd: null,  // callback after marker added
-            afterDeviceMove: null,  // callback after lat, lng, angle changed
+            afterClick: null,
+            afterMarkerAdd: null,
+            afterDeviceMove: null,
 
             htmlInit: `
 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -334,7 +334,9 @@
 
         _onLocationFound: function (event) {
             // console.log("_onLocationFound", new Date().toISOString(), event.latitude, event.longitude, event.accuracy);
-            if (Math.round(this._latitude * 1000000) === Math.round(event.latitude * 1000000) && Math.round(this._longitude * 1000000) === Math.round(event.longitude * 1000000) && Math.round(this._accuracy * 100) === Math.round(event.accuracy * 100)) return;
+            if (Math.round(this._latitude * 1000000) === Math.round(event.latitude * 1000000) &&
+                Math.round(this._longitude * 1000000) === Math.round(event.longitude * 1000000) &&
+                Math.round(this._accuracy * 100) === Math.round(event.accuracy * 100)) return;
             this._latitude = event.latitude;
             this._longitude = event.longitude;
             this._accuracy = event.accuracy;

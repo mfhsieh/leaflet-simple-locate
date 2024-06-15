@@ -1,21 +1,22 @@
-/* 
- * Leaflet Control SimpleLocate v0.1 - 2024-05-24 
- * 
+/*
+ * Leaflet Control SimpleLocate v1.0.0 - 2024-6-15
+ *
  * Copyright 2024 mfhsieh
- * mfhsieh@gmail.com 
- * 
- * Licensed under the MIT license. 
- * 
- * Demos: 
+ * mfhsieh@gmail.com
+ *
+ * Licensed under the MIT license.
+ *
+ * Demos:
  * https://mfhsieh.github.io/leaflet-simple-locate/
- * 
- * Source: 
- * git@github.com:mfhsieh/leaflet-simple-locate.git 
- * 
+ *
+ * Source:
+ * git@github.com:mfhsieh/leaflet-simple-locate.git
+ *
  */
 @-moz-document url-prefix() {
 
     .leaflet-simple-locate .fa,
+    .leaflet-simple-locate .far,
     .leaflet-simple-locate .fas {
         margin-top: .05rem;
         margin-bottom: -.05rem;
