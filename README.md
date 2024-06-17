@@ -9,12 +9,12 @@ A Leaflet plugin displaying device location and orientation on the map, with ori
 
 # Usage
 
-Simply include the [JS](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/src/leaflet-simple-locate.js) and [CSS](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/examples/demo.css) in the head.
+Simply include the [JS](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/dist/leaflet-simple-locate.min.js) and [CSS](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/examples/demo.css) in the head.
 
 ```
 <head>
     ...
-    <script src="leaflet-simple-locate.js"></script>
+    <script src="dist/leaflet-simple-locate.min.js"></script>
     <link rel="stylesheet" href="demo.css" />
     ...
 </head>
