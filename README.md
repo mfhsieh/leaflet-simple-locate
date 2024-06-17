@@ -11,7 +11,7 @@ A Leaflet plugin displaying device location and orientation on the map, with ori
 
 Simply include the [JS](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/dist/leaflet-simple-locate.min.js) and [CSS](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/examples/demo.css) in the head.
 
-```
+```html
 <head>
     ...
     <script src="dist/leaflet-simple-locate.min.js"></script>
@@ -22,7 +22,7 @@ Simply include the [JS](https://github.com/mfhsieh/leaflet-simple-locate/blob/ma
 
 And add the control to the map.
 
-```
+```js
 new L.Control.SimpleLocate({
     position: "topleft",
     className: "button-locate",
