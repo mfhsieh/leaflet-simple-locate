@@ -1,5 +1,5 @@
 /*
- * Leaflet.SimpleLocate v1.0.0 - 2024-6-15
+ * Leaflet.SimpleLocate v1.0.1 - 2024-6-15
  *
  * Copyright 2024 mfhsieh
  * mfhsieh@gmail.com
@@ -31,7 +31,7 @@
 })(function (L) {
     "use strict";
 
-    const control = L.Control.extend({
+    const SimpleLocate = L.Control.extend({
         options: {
             className: "",
             title: "Locate Geolocation and Orientation",
@@ -455,5 +455,9 @@
         },
     });
 
-    return control;
+    L.control.simpleLocate = function (options) {
+        return new SimpleLocate(options);
+    };
+
+    return SimpleLocate;
 });
