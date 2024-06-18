@@ -9,7 +9,7 @@ A Leaflet plugin displaying device location and orientation on the map, with ori
 
 # Usage
 
-Simply include the [JS](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/dist/leaflet-simple-locate.min.js) and [CSS](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/examples/demo.css) in the head.
+Simply include the [JS](dist/leaflet-simple-locate.min.js) and [CSS](examples/demo.css) in the head.
 
 ```html
 <head>
@@ -40,7 +40,7 @@ new L.Control.SimpleLocate({
 
 The CSS variable `--leaflet-simple-locate-orientation` changes based on the device's orientation and can be used to customize other HTML elements.
 
-For more examples, refer to this [demo](https://mfhsieh.github.io/leaflet-simple-locate/) (code: [index.html](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/index.html), [demo.css](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/examples/demo.css)).
+For more examples, refer to this [demo](https://mfhsieh.github.io/leaflet-simple-locate/) (code: [index.html](index.html), [demo.css](examples/demo.css)).
 
 
 # Options
@@ -58,12 +58,12 @@ For more examples, refer to this [demo](https://mfhsieh.github.io/leaflet-simple
 | clickTimeoutDelay | Number    | 500                                                                                                            | time interval (in milliseconds) for detecting a double-click on the button                         |
 | title             | String    | "Locate Geolocation and Orientation"                                                                           | the "title" attribute of the button                                                                |
 | ariaLabel         | String    | ""                                                                                                             | the "aria-label" attribute of the button. If it is an empty string, it will be equal to "title".   |
-| htmlInit          | String    | refer to [html_init.svg](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/images/html_init.svg)               | the HTML content of the button before it is clicked.                                               |
-| htmlSpinner       | String    | refer to [html_spinner.svg](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/images/html_spinner.svg)         | the HTML content of the button during the user authorization                                       |
-| htmlGeolocation   | String    | refer to [html_geolocation.svg](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/images/html_geolocation.svg) | the HTML content of the button for geolocation authorization only                                  |
-| htmlOrientation   | String    | refer to [html_orientation.svg](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/images/html_orientation.svg) | the HTML content of the button for geolocation and orientation authorization                       |
-| iconGeolocation   | L.divIcon | refer to [icon_geolocation.svg](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/images/icon_geolocation.svg) | the icon representing device's location                                                            |
-| iconOrientation   | L.divIcon | refer to [icon_orientation.svg](https://github.com/mfhsieh/leaflet-simple-locate/blob/main/images/icon_orientation.svg) | the icon representing device's location and orientation                                            |
+| htmlInit          | String    | refer to [html_init.svg](images/html_init.svg)               | the HTML content of the button before it is clicked.                                               |
+| htmlSpinner       | String    | refer to [html_spinner.svg](images/html_spinner.svg)         | the HTML content of the button during the user authorization                                       |
+| htmlGeolocation   | String    | refer to [html_geolocation.svg](images/html_geolocation.svg) | the HTML content of the button for geolocation authorization only                                  |
+| htmlOrientation   | String    | refer to [html_orientation.svg](images/html_orientation.svg) | the HTML content of the button for geolocation and orientation authorization                       |
+| iconGeolocation   | L.divIcon | refer to [icon_geolocation.svg](images/icon_geolocation.svg) | the icon representing device's location                                                            |
+| iconOrientation   | L.divIcon | refer to [icon_orientation.svg](images/icon_orientation.svg) | the icon representing device's location and orientation                                            |
 
 # Where
 
