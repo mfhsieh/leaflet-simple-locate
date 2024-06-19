@@ -1,5 +1,5 @@
 /*
- * Leaflet.SimpleLocate v1.0.1 - 2024-6-15
+ * Leaflet.SimpleLocate v1.0.2 - 2024-6-15
  *
  * Copyright 2024 mfhsieh
  * mfhsieh@gmail.com
@@ -334,9 +334,9 @@
 
         _onLocationFound: function (event) {
             // console.log("_onLocationFound", new Date().toISOString(), event.latitude, event.longitude, event.accuracy);
-            if (Math.round(this._latitude * 1000000) === Math.round(event.latitude * 1000000) &&
-                Math.round(this._longitude * 1000000) === Math.round(event.longitude * 1000000) &&
-                Math.round(this._accuracy * 100) === Math.round(event.accuracy * 100)) return;
+            if (this._latitude && event.latitude && Math.round(this._latitude * 1000000) === Math.round(event.latitude * 1000000) &&
+                this._longitude && event.longitude && Math.round(this._longitude * 1000000) === Math.round(event.longitude * 1000000) &&
+                this._accuracy && event.accuracy && Math.round(this._accuracy * 100) === Math.round(event.accuracy * 100)) return;
             this._latitude = event.latitude;
             this._longitude = event.longitude;
             this._accuracy = event.accuracy;
