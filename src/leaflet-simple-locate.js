@@ -204,6 +204,9 @@
                     this._clicked = undefined;
                     this._geolocation = undefined;
                     this._orientation = undefined;
+		    this._latitude = undefined;
+		    this._longitude = undefined;
+		    this._accuracy = undefined;
                     this._updateButton();
                     this._map.off("layeradd", this._onLayerAdd, this);
                 }
