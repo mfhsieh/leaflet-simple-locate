@@ -1,5 +1,5 @@
 /*
- * Leaflet.SimpleLocate v1.0.3 - 2024-6-15
+ * Leaflet.SimpleLocate v1.0.4 - 2024-6-15
  *
  * Copyright 2024 mfhsieh
  * mfhsieh@gmail.com
@@ -204,10 +204,6 @@
                     this._clicked = undefined;
                     this._geolocation = undefined;
                     this._orientation = undefined;
-                    this._latitude = undefined;
-                    this._longitude = undefined;
-                    this._accuracy = undefined;
-                    this._angle = undefined;
                     this._updateButton();
                     this._map.off("layeradd", this._onLayerAdd, this);
                 }
