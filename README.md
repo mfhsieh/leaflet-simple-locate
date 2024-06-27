@@ -1,10 +1,11 @@
 Leaflet.SimpleLocate
 =
 
-A Leaflet plugin displaying device location and orientation on the map, with orientation adjusted according to screen rotation. Tested on desktop and mobile versions of Chrome, Edge, Firefox, and Safari.
+A [Leaflet](https://leafletjs.com/) plugin displaying device location and orientation on the map, with orientation adjusted according to screen rotation.
 
 * Demo Page: [demo](https://mfhsieh.github.io/leaflet-simple-locate/) (activate: click the button, deactivate: double-click)
 * Current Version: v1.0.4
+* Tested on desktop and mobile versions of Chrome, Edge, Firefox, and Safari.
 
 
 # Usage
@@ -40,7 +41,7 @@ new L.Control.SimpleLocate({
 
 The CSS variable `--leaflet-simple-locate-orientation` changes based on the device's orientation and can be used to customize other HTML elements.
 
-For more examples, refer to this [demo](https://mfhsieh.github.io/leaflet-simple-locate/) (code: [index.html](index.html), [demo.css](examples/demo.css)).
+For more details, refer to this [demo](https://mfhsieh.github.io/leaflet-simple-locate/) (code: [index.html](index.html), [demo.css](examples/demo.css)).
 
 
 # Options
