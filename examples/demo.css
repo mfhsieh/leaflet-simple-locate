@@ -1,5 +1,5 @@
 /*
- * Leaflet.SimpleLocate v1.0.4 - 2024-6-15
+ * Leaflet.SimpleLocate v1.1.0 - 2024-6-15
  *
  * Copyright 2024 mfhsieh
  * mfhsieh@gmail.com
@@ -118,7 +118,7 @@
 }
 
 .leaflet-simple-locate-orientation {
-    /* transform: rotate(var(--leaflet-simple-locate-orientation, 0deg)); */
+    transform: rotate(var(--leaflet-simple-locate-orientation, 0deg));
 }
 
 #leaflet-simple-locate-icon-spot {
