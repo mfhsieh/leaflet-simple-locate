@@ -90,11 +90,16 @@
                     });
                 }
             },
-            afterDeviceMove: (event) => {
-                console.log(event);
-            }
+            // afterDeviceMove: (event) => {
+            //     console.log(event);
+            // }
         }).addTo(map);
-    </script>
+
+        map.on("locationfound", (event) => console.log(event));
+        map.on("locationerror", (event) => console.log(event));
+        L.DomEvent.on(window, "ondeviceorientationabsolute" in window ? "deviceorientationabsolute" : "deviceorientation", (event) => console.log(event));
+
+</script>
 </body>
 
 </html>
