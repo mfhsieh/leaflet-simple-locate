@@ -63,7 +63,7 @@
             position: "topleft",
             className: "button-locate",
             afterClick: (result) => {
-                console.log("afterClick");
+                console.log("afterClick", result);
                 if (!result.geolocation) console.log("Geolocation Error");
                 if (!result.orientation) console.log("Orientation Error");
             },
@@ -91,10 +91,14 @@
                     });
                 }
             },
-            afterDeviceMove: (event) => {
-                console.log(event);
-            }
+            // afterDeviceMove: (event) => {
+            //     console.log(event);
+            // }
         }).addTo(map);
+
+        map.on("locationfound", (event) => console.log(event));
+        map.on("locationerror", (event) => console.log(event));
+        L.DomEvent.on(window, "ondeviceorientationabsolute" in window ? "deviceorientationabsolute" : "deviceorientation", (event) => console.log(event));
     </script>
 </body>
 
