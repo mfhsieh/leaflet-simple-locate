@@ -4,7 +4,7 @@ Leaflet.SimpleLocate
 A [Leaflet](https://leafletjs.com/) plugin displaying device location and orientation on the map, with orientation adjusted according to screen rotation.
 
 * Demo Page: [demo](https://mfhsieh.github.io/leaflet-simple-locate/) (activate: click the button, deactivate: double-click)
-* Current Version: v1.0.4
+* Current Version: v1.0.5
 * Tested on desktop and mobile versions of Chrome, Edge, Firefox, and Safari.
 
 

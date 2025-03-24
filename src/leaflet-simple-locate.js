@@ -1,5 +1,5 @@
 /*
- * Leaflet.SimpleLocate v1.0.4 - 2024-6-15
+ * Leaflet.SimpleLocate v1.0.5 - 2025-03-23
  *
  * Copyright 2024 mfhsieh
  * mfhsieh@gmail.com
@@ -14,24 +14,42 @@
  *
  */
 (function (factory) {
+    if (typeof define === "function" && define.amd) {
+        // AMD module
+        define(["leaflet"], factory);
 
-    if (typeof define === 'function' && define.amd) {  // eslint-disable-line no-undef
-        // define an AMD module that relies on 'leaflet'
-        define(['leaflet'], factory);  // eslint-disable-line no-undef
+    } else if (typeof exports === "object") {
+        // CommonJS module
+        module.exports = factory(require("leaflet"));
 
-    } else if (typeof exports === 'object') {
-        // define a Common JS module that relies on 'leaflet'
-        module.exports = factory(require('leaflet'));  // eslint-disable-line no-undef
-
-    } else if (typeof window !== 'undefined') {
-        // attach your plugin to the global 'L' variable
+    } else if (typeof window !== "undefined") {
+        // Browser globals
         if (typeof window.L === "undefined") throw "Leaflet must be loaded first.";
         window.L.Control.SimpleLocate = factory(window.L);
     }
 })(function (L) {
     "use strict";
 
+    /**
+     * A Leaflet control to handle geolocation and orientation.
+     * @class
+     * @extends L.Control
+     */
     const SimpleLocate = L.Control.extend({
+        /**
+         * @typedef {Object} SimpleLocateOptions
+         * @property {string} className - Additional CSS class for the control button.
+         * @property {string} title - Tooltip text for the button.
+         * @property {string} ariaLabel - ARIA label for accessibility.
+         * @property {number} minAngleChange - Minimum angle change to trigger an update.
+         * @property {number} clickTimeoutDelay - Delay before processing a click event.
+         * @property {boolean} setViewAfterClick - Whether to re-center the map after clicking.
+         * @property {number} [zoomLevel] - Zoom level when centering the map.
+         * @property {boolean} drawCircle - Whether to draw an accuracy circle.
+         * @property {Function} [afterClick] - Callback after button click.
+         * @property {Function} [afterMarkerAdd] - Callback after adding a marker.
+         * @property {Function} [afterDeviceMove] - Callback after device movement.
+         */
         options: {
             className: "",
             title: "Locate Geolocation and Orientation",
@@ -129,6 +147,14 @@
             }),
         },
 
+        /**
+         * Initializes the SimpleLocate control.
+         *
+         * @function initialize
+         * @memberof SimpleLocate
+         * @param {SimpleLocateOptions} options The options for the SimpleLocate control.
+         * @returns {void}
+         */
         initialize: function (options) {
             L.Util.setOptions(this, options);
 
@@ -151,6 +177,14 @@
             this._angle = undefined;
         },
 
+        /**
+         * Adds the SimpleLocate control to the Leaflet map.
+         *
+         * @function onAdd
+         * @memberof SimpleLocate
+         * @param {L.Map} map The Leaflet map to add the control to.
+         * @returns {HTMLElement} The control's button element.
+         */
         onAdd: function (map) {
             this._map = map;
 
@@ -170,6 +204,13 @@
             return this._button;
         },
 
+        /**
+         * Returns the current latitude and longitude.
+         *
+         * @function getLatLng
+         * @memberof SimpleLocate
+         * @returns {LatLngLiteral|null} The current latitude and longitude, or `null` if not available.
+         */
         getLatLng: function () {
             if (!this._latitude || !this._longitude) return null;
             return {
@@ -178,20 +219,51 @@
             };
         },
 
+        /**
+         * Returns the current accuracy of the location.
+         *
+         * @function getAccuracy
+         * @memberof SimpleLocate
+         * @returns {number|null} The current accuracy in meters, or `null` if not available.
+         */
         getAccuracy: function () {
             if (!this._accuracy) return null;
             return this._accuracy;
         },
 
+        /**
+         * Returns the current device orientation angle.
+         *
+         * @function getAngle
+         * @memberof SimpleLocate
+         * @returns {number|null} The current device orientation angle in degrees, or `null` if not available.
+         */
         getAngle: function () {
             if (!this._angle) return null;
             return this._angle;
         },
 
+        /**
+         * Sets the zoom level for the map view.
+         *
+         * @function setZoomLevel
+         * @memberof SimpleLocate
+         * @param {number} level The zoom level to set.
+         * @returns {void}
+         */
         setZoomLevel: function (level) {
             this.options.zoomLevel = level;
         },
 
+        /**
+         * Handles the click event on the control's button.
+         *
+         * @private
+         * @async
+         * @function _onClick
+         * @memberof SimpleLocate
+         * @returns {Promise<void>}
+         */
         _onClick: async function () {
             if (this._clickTimeout) {
                 // console.log("_onClick: double click", new Date().toISOString());
@@ -251,6 +323,14 @@
             }
         },
 
+        /**
+         * Updates the button state and triggers the `afterClick` callback if defined.
+         *
+         * @private
+         * @function _checkClickResult
+         * @memberof SimpleLocate
+         * @returns {void}
+         */
         _checkClickResult: function () {
             this._updateButton();
 
@@ -267,6 +347,16 @@
             }
         },
 
+        /**
+         * Checks if the browser supports geolocation and retrieves the current position.
+         *
+         * @private
+         * @function _checkGeolocation
+         * @memberof SimpleLocate
+         * @returns {Promise<GeolocationCoordinates>} A promise that resolves with the
+         * geolocation coordinates if successful, or rejects if geolocation is not
+         * supported or an error occurs.
+         */
         _checkGeolocation: function () {
             if (typeof navigator !== "object" || !("geolocation" in navigator) ||
                 typeof navigator.geolocation.getCurrentPosition !== "function" || typeof navigator.geolocation.watchPosition !== "function")
@@ -277,6 +367,16 @@
             });
         },
 
+        /**
+         * Checks if the browser supports device orientation and requests permission if needed.
+         *
+         * @private
+         * @function _checkOrientation
+         * @memberof SimpleLocate
+         * @returns {Promise<boolean>} A promise that resolves with `true` if device
+         * orientation is supported and permission is granted (if needed), or rejects if
+         * device orientation is not supported or permission is denied.
+         */
         _checkOrientation: function () {
             if (!("ondeviceorientationabsolute" in window || "ondeviceorientation" in window) || !DeviceOrientationEvent)
                 return Promise.reject();
@@ -290,6 +390,14 @@
             });
         },
 
+        /**
+         * Starts watching the device's geolocation for changes.
+         *
+         * @private
+         * @function _watchGeolocation
+         * @memberof SimpleLocate
+         * @returns {void}
+         */
         _watchGeolocation: function () {
             // console.log("_watchGeolocation");
             this._map.locate({ watch: true, enableHighAccuracy: true });
@@ -299,6 +407,14 @@
             this._map.on("zoomend", this._onZoomEnd, this);
         },
 
+        /**
+         * Stops watching the device's geolocation for changes and removes related layers.
+         *
+         * @private
+         * @function _unwatchGeolocation
+         * @memberof SimpleLocate
+         * @returns {void}
+         */
         _unwatchGeolocation: function () {
             // console.log("_unwatchGeolocation");
             this._map.stopLocate();
@@ -320,11 +436,27 @@
             this._accuracy = undefined;
         },
 
+        /**
+         * Starts listening for device orientation changes.
+         *
+         * @private
+         * @function _watchOrientation
+         * @memberof SimpleLocate
+         * @returns {void}
+         */
         _watchOrientation: function () {
             // console.log("_watchOrientation");
             L.DomEvent.on(window, "ondeviceorientationabsolute" in window ? "deviceorientationabsolute" : "deviceorientation", this._onOrientation, this);
         },
 
+        /**
+         * Stops listening for device orientation changes and resets the orientation style.
+         *
+         * @private
+         * @function _unwatchOrientation
+         * @memberof SimpleLocate
+         * @returns {void}
+         */
         _unwatchOrientation: function () {
             // console.log("_unwatchOrientation");
             L.DomEvent.off(window, "ondeviceorientationabsolute" in window ? "deviceorientationabsolute" : "deviceorientation", this._onOrientation, this);
@@ -332,6 +464,16 @@
             this._angle = undefined;
         },
 
+        /**
+         * Handles the `locationfound` event from the Leaflet map.
+         *
+         * @private
+         * @function _onLocationFound
+         * @memberof SimpleLocate
+         * @param {GeolocationCoordinates} event The event object containing the new
+         * location data.
+         * @returns {void}
+         */
         _onLocationFound: function (event) {
             // console.log("_onLocationFound", new Date().toISOString(), event.latitude, event.longitude, event.accuracy);
             if (this._latitude && event.latitude && Math.round(this._latitude * 1000000) === Math.round(event.latitude * 1000000) &&
@@ -347,6 +489,16 @@
         //     console.log("_onLocationError", new Date().toISOString(), event.code, event.message);
         // },
 
+        /**
+         * Handles the `locationfound` event from the Leaflet map.
+         *
+         * @private
+         * @function _onLocationFound
+         * @memberof SimpleLocate
+         * @param {GeolocationCoordinates} event The event object containing the new
+         * location data.
+         * @returns {void}
+         */
         _onOrientation: function (event) {
             // console.log("_onOrientation", new Date().toISOString(), event.absolute, event.alpha, event.beta, event.gamma);
             let angle;
@@ -364,14 +516,40 @@
             this._updateMarker();
         },
 
+        /**
+         * Handles the `zoomstart` event from the Leaflet map.
+         *
+         * @private
+         * @function _onZoomStart
+         * @memberof SimpleLocate
+         * @returns {void}
+         */
         _onZoomStart: function () {
             if (this._circle) document.documentElement.style.setProperty("--leaflet-simple-locate-circle-display", "none");
         },
 
+        /**
+         * Handles the `zoomend` event from the Leaflet map.
+         *
+         * @private
+         * @function _onZoomEnd
+         * @memberof SimpleLocate
+         * @returns {void}
+         */
         _onZoomEnd: function () {
             if (this._circle) document.documentElement.style.setProperty("--leaflet-simple-locate-circle-display", "inline");
         },
 
+        /**
+         * Handles the `layeradd` event from the Leaflet map.
+         *
+         * @private
+         * @function _onLayerAdd
+         * @memberof SimpleLocate
+         * @param {LayerEvent} event The event object containing information about the
+         * added layer.
+         * @returns {void}
+         */
         _onLayerAdd: function (event) {
             if (this.options.afterMarkerAdd && event.layer == this._marker) {
                 // console.log("_onLayerAdd", new Date().toISOString(), event.layer.icon_name ? event.layer.icon_name : "undefined", event.layer);
@@ -379,6 +557,14 @@
             }
         },
 
+        /**
+         * Sets the map's view to the current location.
+         *
+         * @private
+         * @function _setView
+         * @memberof SimpleLocate
+         * @returns {void}
+         */
         _setView: function () {
             if (!this._map || !this._latitude || !this._longitude) return;
 
@@ -388,6 +574,14 @@
                 this._map.setView([this._latitude, this._longitude]);
         },
 
+        /**
+         * Updates the button's appearance based on the current state.
+         *
+         * @private
+         * @function _updateButton
+         * @memberof SimpleLocate
+         * @returns {void}
+         */
         _updateButton: function () {
             if (!this._clicked) {
                 if (this._button.html_name !== "init") {
@@ -417,6 +611,14 @@
             }
         },
 
+        /**
+         * Updates the marker and circle on the map with the current location and orientation data.
+         *
+         * @private
+         * @function _updateMarker
+         * @memberof SimpleLocate
+         * @returns {void}
+         */
         _updateMarker: function () {
             if (this.options.afterDeviceMove) this.options.afterDeviceMove({
                 lat: this._latitude,
@@ -455,6 +657,14 @@
         },
     });
 
+    /**
+     * Creates a new instance of the SimpleLocate control.
+     *
+     * @function L.control.simpleLocate
+     * @memberof L.control
+     * @param {SimpleLocateOptions} options The options for the SimpleLocate control.
+     * @returns {SimpleLocate} A new instance of the SimpleLocate control.
+     */
     L.control.simpleLocate = function (options) {
         return new SimpleLocate(options);
     };
