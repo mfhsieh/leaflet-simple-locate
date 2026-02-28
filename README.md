@@ -16,7 +16,7 @@ Simply include the [JS](dist/leaflet-simple-locate.min.js) and [CSS](examples/de
 <head>
     ...
     <script src="dist/leaflet-simple-locate.min.js"></script>
-    <link rel="stylesheet" href="demo.css" />
+    <link rel="stylesheet" href="examples/demo.css" />
     ...
 </head>
 ```
