@@ -1,4 +1,4 @@
-<svg class="leaflet-simple-locate-icon" width="96" height="96" viewBox="-48 -48 96 96" xmlns="http://www.w3.org/2000/svg">
+<svg class="leaflet-simple-locate-icon" width="96" height="96" viewBox="-48 -48 96 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 	<defs>
 		<linearGradient id="gradient" x2="0" y2="-48" gradientUnits="userSpaceOnUse">
 			<stop style="stop-opacity:1" offset="0" />

@@ -1,7 +1,7 @@
 /*
- * Leaflet.SimpleLocate v1.0.5 - 2025-03-23
+ * Leaflet.SimpleLocate v1.0.6 - 2026-02-28
  *
- * Copyright 2024 mfhsieh
+ * Copyright 2026 mfhsieh
  * mfhsieh@gmail.com
  *
  * Licensed under the MIT license.
@@ -46,9 +46,15 @@
          * @property {boolean} setViewAfterClick - Whether to re-center the map after clicking.
          * @property {number} [zoomLevel] - Zoom level when centering the map.
          * @property {boolean} drawCircle - Whether to draw an accuracy circle.
-         * @property {Function} [afterClick] - Callback after button click.
+         * @property {Function} [afterClick] - Callback after button click. Receives `{geolocation: boolean, orientation: boolean}`.
          * @property {Function} [afterMarkerAdd] - Callback after adding a marker.
-         * @property {Function} [afterDeviceMove] - Callback after device movement.
+         * @property {Function} [afterDeviceMove] - Callback after device movement. Receives `{lat: number, lng: number, accuracy: number, angle: number}`.
+         * @property {string} htmlInit - HTML content for the initial button state.
+         * @property {string} htmlSpinner - HTML content for the loading spinner state.
+         * @property {string} htmlGeolocation - HTML content for the geolocation active state.
+         * @property {string} htmlOrientation - HTML content for the orientation active state.
+         * @property {L.DivIcon} iconGeolocation - Icon used for geolocation marker.
+         * @property {L.DivIcon} iconOrientation - Icon used for orientation marker.
          */
         options: {
             className: "",
@@ -67,16 +73,16 @@
             afterDeviceMove: null,
 
             htmlInit: `
-<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 	<path d="M 8,1.5 A 6.5,6.5 0 0 0 1.5,8 6.5,6.5 0 0 0 8,14.5 6.5,6.5 0 0 0 14.5,8 6.5,6.5 0 0 0 8,1.5 Z m 0,2 A 4.5,4.5 0 0 1 12.5,8 4.5,4.5 0 0 1 8,12.5 4.5,4.5 0 0 1 3.5,8 4.5,4.5 0 0 1 8,3.5 Z" />
 	<rect width="1.5" height="4" x="7.25" y="0.5" rx="0.5" ry="0.5" />
 	<rect width="1.5" height="4" x="7.25" y="11.5" rx="0.5" ry="0.5" />
 	<rect width="4" height="1.5" x="0.5" y="7.25" rx="0.5" ry="0.5" />
-	<rect width="4" height="1.5" x="11.5" y="7.25" ry="0.5" rx="0.5" />
+	<rect width="4" height="1.5" x="11.5" y="7.25" rx="0.5" ry="0.5" />
 	<circle cx="8" cy="8" r="1" />
 </svg>`,
             htmlSpinner: `
-<svg width="16" height="16" viewBox="-8 -8 16 16" xmlns="http://www.w3.org/2000/svg">
+<svg width="16" height="16" viewBox="-8 -8 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 	<g>
 		<circle opacity=".7" cx="0" cy="-6" r=".9" transform="rotate(90)" />
 		<circle opacity=".9" cx="0" cy="-6" r="1.3" transform="rotate(45)" />
@@ -90,17 +96,17 @@
 	</g>
 </svg>`,
             htmlGeolocation: `
-<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 	<path d="M 13.329384,2.6706085 C 13.133096,2.4743297 12.77601,2.4382611 12.303066,2.6103882 L 6.6307133,4.6742285 1.1816923,6.6577732 C 1.0668479,6.6995703 0.95157337,6.752486 0.83540381,6.8133451 0.27343954,7.1201064 0.41842508,7.4470449 1.2644998,7.5962244 l 6.0688263,1.0701854 1.0714872,6.0698222 c 0.1491847,0.84604 0.4751513,0.990031 0.7816575,0.427825 0.060857,-0.116165 0.1137803,-0.231436 0.1555779,-0.346273 L 11.324426,9.3702482 13.389608,3.6968841 C 13.56174,3.2239596 13.52567,2.8668883 13.329392,2.6706094 Z" />
 </svg>`,
             htmlOrientation: `
-<svg class="leaflet-simple-locate-orientation" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+<svg class="leaflet-simple-locate-orientation" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 	<path fill="#c00000" d="M 8,0 C 7.7058986,0 7.4109021,0.30139625 7.1855469,0.90234375 L 5.3378906,5.8300781 C 5.2559225,6.0486598 5.1908259,6.292468 5.1386719,6.5507812 6.0506884,6.193573 7.0205489,6.0068832 8,6 8.9768002,6.0005071 9.945249,6.1798985 10.857422,6.5292969 10.805917,6.2790667 10.741782,6.0425374 10.662109,5.8300781 L 8.8144531,0.90234375 C 8.5890978,0.30139615 8.2941007,0 8,0 Z" />
 	<path d="M 8,5.9999998 C 7.0205501,6.006884 6.0506874,6.1935733 5.138672,6.5507817 4.9040515,7.7126196 4.9691485,9.1866095 5.3378906,10.169922 l 1.8476563,4.927734 c 0.4507105,1.201895 1.1781958,1.201894 1.628906,0 L 10.662109,10.169922 C 11.033147,9.1804875 11.097283,7.6944254 10.857422,6.5292967 9.9452497,6.1798989 8.9767993,6.0005076 8,5.9999998 Z m -1e-7,0.7499999 A 1.25,1.258 90 0 1 9.2578124,7.9999996 1.25,1.258 90 0 1 8,9.2500001 a 1.25,1.258 90 0 1 -1.2578124,-1.25 1.25,1.258 90 0 1 1.2578123,-1.2500004 z" />
 </svg>`,
             iconGeolocation: L.divIcon({
                 html: `
-<svg width="24" height="24" viewBox="-12 -12 24 24" xmlns="http://www.w3.org/2000/svg">
+<svg width="24" height="24" viewBox="-12 -12 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 	<defs>
 		<filter id="gaussian">
 			<feGaussianBlur stdDeviation="0.5" />
@@ -120,7 +126,7 @@
             }),
             iconOrientation: L.divIcon({
                 html: `
-<svg width="96" height="96" viewBox="-48 -48 96 96" xmlns="http://www.w3.org/2000/svg">
+<svg width="96" height="96" viewBox="-48 -48 96 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 	<defs>
 		<linearGradient id="gradient" x2="0" y2="-48" gradientUnits="userSpaceOnUse">
 			<stop style="stop-opacity:1" offset="0" />
@@ -175,6 +181,9 @@
             this._longitude = undefined;
             this._accuracy = undefined;
             this._angle = undefined;
+
+            // performance
+            this._updateRequestId = undefined;
         },
 
         /**
@@ -202,6 +211,38 @@
                 .on(this._button, "click", this._onClick, this);
 
             return this._button;
+        },
+
+        /**
+         * Removes the SimpleLocate control from the Leaflet map and cleans up events.
+         *
+         * @function onRemove
+         * @memberof SimpleLocate
+         * @param {L.Map} map The Leaflet map the control is being removed from.
+         * @returns {void}
+         */
+        onRemove: function (map) {
+            if (this._clickTimeout) {
+                clearTimeout(this._clickTimeout);
+                this._clickTimeout = undefined;
+            }
+
+            if (this._updateRequestId) {
+                cancelAnimationFrame(this._updateRequestId);
+                this._updateRequestId = undefined;
+            }
+
+            if (this._clicked) {
+                if (this._geolocation) this._unwatchGeolocation();
+                if (this._orientation) this._unwatchOrientation();
+                this._clicked = undefined;
+                this._geolocation = undefined;
+                this._orientation = undefined;
+            }
+
+            this._map.off("layeradd", this._onLayerAdd, this);
+
+            L.DomEvent.off(this._button, "click", this._onClick, this);
         },
 
         /**
@@ -460,7 +501,7 @@
         _unwatchOrientation: function () {
             // console.log("_unwatchOrientation");
             L.DomEvent.off(window, "ondeviceorientationabsolute" in window ? "deviceorientationabsolute" : "deviceorientation", this._onOrientation, this);
-            document.documentElement.style.setProperty("--leaflet-simple-locate-orientation", "0deg");
+            this._map.getContainer().style.setProperty("--leaflet-simple-locate-orientation", "0deg");
             this._angle = undefined;
         },
 
@@ -470,7 +511,7 @@
          * @private
          * @function _onLocationFound
          * @memberof SimpleLocate
-         * @param {GeolocationCoordinates} event The event object containing the new
+         * @param {GeolocationCoordinates|L.LocationEvent} event The event object containing the new
          * location data.
          * @returns {void}
          */
@@ -482,7 +523,7 @@
             this._latitude = event.latitude;
             this._longitude = event.longitude;
             this._accuracy = event.accuracy;
-            this._updateMarker();
+            this._requestUpdate();
         },
 
         // _onLocationError: function (event) {
@@ -490,20 +531,19 @@
         // },
 
         /**
-         * Handles the `locationfound` event from the Leaflet map.
+         * Handles the `deviceorientation` or `deviceorientationabsolute` event from the window.
          *
          * @private
-         * @function _onLocationFound
+         * @function _onOrientation
          * @memberof SimpleLocate
-         * @param {GeolocationCoordinates} event The event object containing the new
-         * location data.
+         * @param {DeviceOrientationEvent} event The event object containing the orientation data.
          * @returns {void}
          */
         _onOrientation: function (event) {
             // console.log("_onOrientation", new Date().toISOString(), event.absolute, event.alpha, event.beta, event.gamma);
             let angle;
             if (event.webkitCompassHeading) angle = event.webkitCompassHeading;
-            else angle = 360 - event.alpha;  // todos: test needed...
+            else angle = 360 - event.alpha;  // TODO: test needed on non-iOS devices.
 
             if (this._angle && Math.abs(angle - this._angle) < this.options.minAngleChange) return;
             this._angle = angle;
@@ -512,8 +552,8 @@
             // else if (typeof window.orientation !== 'undefined') this._angle += window.orientation;  // it seems unnecessary.
             this._angle = (this._angle + 360) % 360;
 
-            document.documentElement.style.setProperty("--leaflet-simple-locate-orientation", -this._angle + "deg");
-            this._updateMarker();
+            this._map.getContainer().style.setProperty("--leaflet-simple-locate-orientation", -this._angle + "deg");
+            this._requestUpdate();
         },
 
         /**
@@ -612,6 +652,22 @@
         },
 
         /**
+         * Requests an update of the marker and circle using requestAnimationFrame.
+         *
+         * @private
+         * @function _requestUpdate
+         * @memberof SimpleLocate
+         * @returns {void}
+         */
+        _requestUpdate: function () {
+            if (this._updateRequestId) return;
+            this._updateRequestId = requestAnimationFrame(() => {
+                this._updateRequestId = undefined;
+                this._updateMarker();
+            });
+        },
+
+        /**
          * Updates the marker and circle on the map with the current location and orientation data.
          *
          * @private
@@ -630,7 +686,7 @@
             if (!this._latitude || !this._longitude || (this.options.drawCircle && !this._accuracy)) return;
 
             let icon_name;
-            if (this._geolocation && this._orientation && this._angle) icon_name = "iconOrientation";
+            if (this._geolocation && this._orientation && typeof this._angle !== "undefined") icon_name = "iconOrientation";
             else if (this._geolocation) icon_name = "iconGeolocation";
             else return;
 

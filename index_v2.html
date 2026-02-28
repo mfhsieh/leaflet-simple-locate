@@ -3,17 +3,19 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Leaflet.SimpleLocate - Demo (v1.0.6)</title>
+    <title>Leaflet.SimpleLocate - Demo (v2.0.0-alpha.1)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.css" />
+    <script type="importmap">
+    {
+        "imports": {
+            "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.js"
+        }
+    }
+    </script>
 
-    <!-- <script src="src/leaflet-simple-locate.js"></script> -->
-    <script src="dist/leaflet-simple-locate.min.js"></script>
     <link rel="stylesheet" href="examples/demo.css" />
 
     <style>
@@ -39,7 +41,11 @@
 <body>
     <div id="map"></div>
 
-    <script>
+    <script type="module">
+        import L from 'leaflet';
+        import SimpleLocate from './src/leaflet-simple-locate_v2.js';
+        // import SimpleLocate from './dist/leaflet-simple-locate_v2.min.js';
+
         "use strict";
 
         function set_viewport() {
@@ -55,13 +61,13 @@
             zoomControl: false,
         });
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        new L.TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             minZoom: 7,
             maxZoom: 19,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
         }).addTo(map);
 
-        const control = new L.Control.SimpleLocate({
+        const control = new SimpleLocate({
             position: "topleft",
             className: "button-locate",
             afterClick: (result) => {
@@ -83,7 +89,7 @@
                         const angle = control.getAngle();
                         const angle_str = `orientation: ${Math.round(angle)} degree`;
 
-                        L.popup()
+                        new L.Popup()
                             .setLatLng(latlng)
                             .setContent(`<p style="margin: 0.25rem 0 0.25rem 0">${latlng_str}</p><p style="margin: 0.25rem 0 0.25rem 0">${accuracy_str}</p><p style="margin: 0.25rem 0 0.25rem 0">${angle_str}</p>`)
                             .openOn(map);
