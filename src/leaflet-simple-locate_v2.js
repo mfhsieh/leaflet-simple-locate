@@ -206,7 +206,7 @@ const SimpleLocate = L.Control.extend({
      * @param {L.Map} map The Leaflet map the control is being removed from.
      * @returns {void}
      */
-    onRemove: function (map) {
+    onRemove: function (map) {  // eslint-disable-line no-unused-vars
         if (this._clickTimeout) {
             clearTimeout(this._clickTimeout);
             this._clickTimeout = undefined;
